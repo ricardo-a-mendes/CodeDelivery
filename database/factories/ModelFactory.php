@@ -13,6 +13,7 @@
 
 
 use CodeDelivery\Models\Category;
+use CodeDelivery\Models\Product;
 use CodeDelivery\Models\User;
 use Faker\Generator;
 
@@ -28,5 +29,13 @@ $factory->define(User::class, function (Generator $faker) {
 $factory->define(Category::class, function (Generator $faker) {
     return [
         'name' => $faker->word,
+    ];
+});
+
+$factory->define(Product::class, function (Generator $faker) {
+    return [
+        'name' => $faker->word,
+        'description' => $faker->sentence,
+        'price' => $faker->numberBetween(10, 200)
     ];
 });
