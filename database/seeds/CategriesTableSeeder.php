@@ -16,7 +16,7 @@ class CategriesTableSeeder extends Seeder
         factory(Category::class, 30)->create()->each(function ($createdCategory) {
             for ($i = 0; $i < 5; $i++) {
                 $productModel = factory(Product::class)->make();
-                $createdCategory->getProducts()->save($productModel);
+                $createdCategory->products()->save($productModel);
             }
         });
     }

@@ -1,5 +1,6 @@
 <?php
 
+use CodeDelivery\Models\Client;
 use CodeDelivery\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,9 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 10)->create();
+        factory(User::class, 10)->create()->each(function ($createdUser){
+            $clientModel = factory(Client::class)->make();
+            $createdUser->client()->save($clientModel);
+        });
     }
 }
