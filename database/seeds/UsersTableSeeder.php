@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 10)->create()->each(function ($createdUser){
+        factory(User::class, 10)->create()->each(function (User $createdUser){
             $clientModel = factory(Client::class)->make();
             $createdUser->client()->save($clientModel);
         });

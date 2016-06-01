@@ -13,7 +13,7 @@ class CategriesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Category::class, 30)->create()->each(function ($createdCategory) {
+        factory(Category::class, 30)->create()->each(function (Category $createdCategory) {
             for ($i = 0; $i < 5; $i++) {
                 $productModel = factory(Product::class)->make();
                 $createdCategory->products()->save($productModel);
