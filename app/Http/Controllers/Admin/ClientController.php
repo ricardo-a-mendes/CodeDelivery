@@ -2,11 +2,15 @@
 
 namespace CodeDelivery\Http\Controllers\Admin;
 
-use CodeDelivery\Models\Client;
-use Illuminate\Http\Request;
-
-use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Controllers\Controller;
+use CodeDelivery\Http\Requests;
+use CodeDelivery\Http\Requests\Admin\ClientCreateRequest;
+use CodeDelivery\Http\Requests\Admin\ClientRequest;
+use CodeDelivery\Http\Requests\Admin\ClientUpdateRequest;
+use CodeDelivery\Models\Client;
+use CodeDelivery\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Session;
 
 class ClientController extends Controller
 {
@@ -20,17 +24,25 @@ class ClientController extends Controller
     public function index()
     {
         $clientCollection = $this->client->all();
-        return view('client.index', compact('clientCollection'));
+        return view('admin.client.index', compact('clientCollection'));
     }
 
     public function add()
     {
-        return view('client.create');
+        return view('admin.client.create');
     }
 
-    public function create($request)
+    public function create(ClientCreateRequest $request, User $user)
     {
-        $this->client->fill($request->all())->save();
+        $arrRrequest = collect($request->except(['password_confirmation']))
+            ->merge(['role' => 'client']);
+
+        $this->client->fill($arrRrequest->all());
+        $user->fill($arrRrequest->all())->save();
+        $user->client()->save($this->client);
+
+        Session::flash('success', trans('crud.success.saved'));
+
         return redirect()->route('clientList');
     }
 
@@ -38,16 +50,29 @@ class ClientController extends Controller
     {
         try {
             $client = $this->client->findOrFail($id);
-            return view('client.update', compact('client'));
+            return view('admin.client.update', compact('client'));
         } catch (ModelNotFoundException $e) {
-            echo 'Registro Não Localizado';
+            echo trans('crud.record_not_found', ['action' => 'edited']);
         }
     }
 
-    public function update($request, $id)
+    public function update(ClientUpdateRequest $request, $id)
     {
+        $except = collect(['password_confirmation']);
+        if ($request->has('password') === false) {
+            $except->push('password');
+        }
+        $arrRequest = $request->except($except->all());
+
         try {
-            $this->client->findOrFail($id)->fill($request->all())->save();
+            $client = $this->client->findOrFail($id)->fill($arrRequest);
+            $user = $client->user->fill($arrRequest);
+
+            $client->save();
+            $user->save();
+
+            Session::flash('success', trans('crud.success.saved'));
+
             return redirect()->route('clientList');
         } catch (ModelNotFoundException $e) {
             echo 'Registro não localizado para ser editado';
@@ -58,9 +83,12 @@ class ClientController extends Controller
     {
         try {
             $this->client->findOrFail($id)->delete();
-            return redirect()->route('clientList');
+            Session::flash('success', trans('crud.success.deleted'));
+
         } catch (ModelNotFoundException $e) {
-            echo 'Registro não localizado para ser deletado';
+            Session::flash('error', trans('crud.record_not_found', ['action' => 'deleted']));
         }
+
+        return redirect()->route('clientList');
     }
 }
