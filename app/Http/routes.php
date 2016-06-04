@@ -34,4 +34,12 @@ Route::group(['prefix' => 'admin'], function(){
     Route::get('user/edit/{id}', 'Admin\UserController@edit')->name('userEdit');
     Route::put('user/update/{id}', 'Admin\UserController@update')->name('userUpdate');
     Route::get('user/delete/{id}', 'Admin\UserController@delete')->name('userDelete');
+
+    //Orders
+    Route::get('order/list', 'Admin\OrderController@index')->name('orderList');
+    Route::post('order', 'Admin\OrderController@create')->name('orderCreate');
+    Route::get('order/add', 'Admin\OrderController@add')->name('orderAdd');
+    Route::get('order/edit/{id}', 'Admin\OrderController@edit')->name('orderEdit');
+    Route::put('order/update/{id}', 'Admin\OrderController@update')->name('orderUpdate');
+    Route::get('order/delete/{id}', 'Admin\OrderController@delete')->name('orderDelete');
 });

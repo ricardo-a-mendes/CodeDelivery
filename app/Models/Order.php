@@ -20,6 +20,11 @@ class Order extends Model
 
     public function deliveryman()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_deleveryman_id');
+    }
+    
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 }
