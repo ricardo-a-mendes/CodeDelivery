@@ -52,7 +52,8 @@ class ClientController extends Controller
             $client = $this->client->findOrFail($id);
             return view('admin.client.update', compact('client'));
         } catch (ModelNotFoundException $e) {
-            echo trans('crud.record_not_found', ['action' => 'edited']);
+            Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));
+            return redirect()->route('clientList');
         }
     }
 
@@ -71,12 +72,12 @@ class ClientController extends Controller
             $client->save();
             $user->save();
 
-            Session::flash('success', trans('crud.success.saved'));
-
-            return redirect()->route('clientList');
+            Session::flash('success', trans('crud.success.saved'));            
         } catch (ModelNotFoundException $e) {
-            echo 'Registro não localizado para ser editado';
+            Session::flash('error', trans('crud.record_not_found', ['action' => 'updated']));
         }
+
+        return redirect()->route('clientList');
     }
 
     public function delete($id)

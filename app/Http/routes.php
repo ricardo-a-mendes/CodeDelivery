@@ -26,4 +26,12 @@ Route::group(['prefix' => 'admin'], function(){
     Route::get('client/edit/{id}', 'Admin\ClientController@edit')->name('clientEdit');
     Route::put('client/update/{id}', 'Admin\ClientController@update')->name('clientUpdate');
     Route::get('client/delete/{id}', 'Admin\ClientController@delete')->name('clientDelete');
+
+    //Users
+    Route::get('user/list', 'Admin\UserController@index')->name('userList');
+    Route::post('user', 'Admin\UserController@create')->name('userCreate');
+    Route::get('user/add', 'Admin\UserController@add')->name('userAdd');
+    Route::get('user/edit/{id}', 'Admin\UserController@edit')->name('userEdit');
+    Route::put('user/update/{id}', 'Admin\UserController@update')->name('userUpdate');
+    Route::get('user/delete/{id}', 'Admin\UserController@delete')->name('userDelete');
 });

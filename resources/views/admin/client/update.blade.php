@@ -3,24 +3,18 @@
     <div class="content">
         <div class="row">
             <h1>Client Form</h1>
-            @if ($errors)
-                <ul class="alert">
-                    @foreach($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach
-                </ul>
-            @endif
+            @include('form_error')
         </div>
         {!! Form::open(['route' => ['clientUpdate', $client->id], 'method' => 'PUT']) !!}
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     {!! Form::label('name', 'Name') !!}
-                    {!! Form::text('name', $client->user->name, ['class' => 'form-control']) !!}
+                    {!! Form::text('name', $client->user->name, ['class' => 'form-control', 'placeholder' => 'Name']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('email', 'Email') !!}
-                    {!! Form::email('email', $client->user->email, ['class' => 'form-control']) !!}
+                    {!! Form::email('email', $client->user->email, ['class' => 'form-control', 'placeholder' => 'Email']) !!}
                 </div>
             </div>
             <div class="col-md-3">

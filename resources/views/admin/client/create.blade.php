@@ -3,14 +3,7 @@
     <div class="content">
         <div class="row">
             <h1>Client Form</h1>
-
-            @if ($errors)
-                <ul class="alert">
-                    @foreach($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach
-                </ul>
-            @endif
+            @include('form_error')
         </div>
         {!! Form::open(['route' => ['clientCreate'], 'method' => 'POST']) !!}
         <div class="row">
