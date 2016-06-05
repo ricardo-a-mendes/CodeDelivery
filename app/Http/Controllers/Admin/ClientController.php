@@ -83,8 +83,17 @@ class ClientController extends Controller
     public function delete($id)
     {
         try {
-            $this->client->findOrFail($id)->delete();
-            Session::flash('success', trans('crud.success.deleted'));
+
+            $client = $this->client->findOrFail($id);
+            if ($client->orders->count() === 0)
+            {
+                $client->delete();
+                Session::flash('success', trans('crud.success.deleted'));
+            }
+            else
+            {
+                Session::flash('error', trans_choice('crud.client_has_orders', $client->orders->count(), ['qtdOrders' => $client->orders->count()]));   
+            }
 
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'deleted']));
@@ -92,4 +101,6 @@ class ClientController extends Controller
 
         return redirect()->route('clientList');
     }
+
+
 }

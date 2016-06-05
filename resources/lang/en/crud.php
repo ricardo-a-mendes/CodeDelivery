@@ -18,5 +18,6 @@ return [
         'deleted' => 'The record was successfully deleted.'
     ],
     'record_not_found' => 'The selected record was not found to be :action.',
+    'client_has_orders' => 'Sorry, this client has :qtdOrders oreder. It can\'t be deleted!|Sorry, this client has :qtdOrders orders. It can\'t be deleted!'
 
 ];

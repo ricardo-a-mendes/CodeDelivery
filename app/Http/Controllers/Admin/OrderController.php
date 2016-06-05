@@ -42,7 +42,8 @@ class OrderController extends Controller
     {
         try {
             $order = $this->order->findOrFail($id);
-            return view('order.update', compact('order'));
+            $orderStatus = $this->orderStatus;
+            return view('admin.order.update', compact('order', 'orderStatus'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));
             return redirect()->route('orderList');

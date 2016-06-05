@@ -2,41 +2,70 @@
 @section('content')
     <div class="content">
         <div class="row">
-            <h1>User Form</h1>
+            <div class="row page-header">
+                <h1>Order Form <small>Update Record</small></h1>
+                <a class="btn btn-success" href="{{ route('orderAdd') }}">New Order</a>
+            </div>
             @include('form_error')
+
         </div>
-        {!! Form::open(['route' => ['userUpdate', $user->id], 'method' => 'PUT']) !!}
+        {!! Form::open(['route' => ['orderUpdate', $order->id], 'method' => 'PUT']) !!}
+
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    {!! Form::label('name', 'Name') !!}
-                    {!! Form::text('name', $user->name, ['class' => 'form-control']) !!}
-                </div>
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            {!! Form::label('email', 'Email') !!}
-                            {!! Form::email('email', $user->email, ['class' => 'form-control']) !!}
-                        </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        Cliente: {{$order->client->user->name}}
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            {!! Form::label('role', 'Role') !!}
-                            {!! Form::select('role', $roles, $user->role, ['class' => 'form-control']) !!}
-                        </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        Delivery Man: {{$order->deliveryman->name}}
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        Status: {{$orderStatus[$order->status]}}
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="form-group row">
-                    {!! Form::label('password', 'Password') !!}
-                    {!! Form::password('password', ['class' => 'form-control']) !!}
-                </div>
-                <div class="form-group row">
-                    {!! Form::label('password_confirmation', 'Retype Password') !!}
-                    {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
-                </div>
+            <div class="col-md-8">
+                <h2>Order Items <a href="{{route('orderAdd')}}" class="btn btn-success btn-sm" role="button">Add New Item</a></h2>
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>SKU</th>
+                        <th>Product</th>
+                        <th>Unit Price</th>
+                        <th>Quantity</th>
+                        <th>Sub Total</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <td colspan="4" style="text-align: right"><strong>Total</strong></td>
+                        <td colspan="2">{{$order->total}}</td>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    @foreach($order->items as $item)
+                        <tr>
+                            <td>{{$item->product->id}}</td>
+                            <td>{{$item->product->name}}</td>
+                            <td>{{$item->product->price}}</td>
+                            <td>{{$item->quantity}}</td>
+                            <td>{{$item->price}}</td>
+                            <td>
+                                <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{ $item->product->name }}"></span></a>&nbsp;
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
+
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -50,4 +79,33 @@
         </div>
         {!! Form::close() !!}
     </div>
+    <!-- Deleting Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Deleting Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Item to be removed: <strong><span id="itemNameDestination"></span></strong></p>
+                    <p>Are you sure ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a class="btn btn-danger" href="{{route('userDelete', ['id' => ''])}}">Remove</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <script type="text/javascript">
+        $(function() {
+            $('#deleteConfirmationModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var item = button.data('whatever'); // Extract info from data-* attributes
+                var modal = $(this);
+                modal.find('.modal-body span#itemNameDestination').text(item)
+            })
+        });
+    </script>
 @endsection

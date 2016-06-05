@@ -2,11 +2,11 @@
 @section('content')
     <div class="content">
         <div class="row">
-            <h1>Orders</h1>
-            <a href="{{route('orderAdd')}}" class="btn btn-default">New User</a>
-            <br>
-            <br>
-            <table class="table">
+            <div class="row page-header">
+                <h1>Orders <small>Management Area</small></h1>
+                <a href="{{route('orderAdd')}}" class="btn btn-success">New Order</a>
+            </div>
+            <table class="table table-striped">
                 <tr>
                     <th>Order ID</th>
                     <th>Client</th>
@@ -23,8 +23,7 @@
                         <td>{{$order->total}}</td>
                         <td>{{$orderStatus[$order->status]}}</td>
                         <td>
-                            <a href="{{route('orderEdit', ['id' => $order->id])}}">Edit</a> |
-                            <a href="{{route('orderDelete', ['id' => $order->id])}}">Delete</a>
+                            <a href="{{route('orderEdit', ['id' => $order->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                 @endforeach

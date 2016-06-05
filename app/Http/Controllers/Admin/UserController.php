@@ -67,9 +67,17 @@ class UserController extends Controller
     public function delete($id)
     {
         try {
-            $this->user->findOrFail($id)->delete();
+            $user = $this->user->findOrFail($id);
 
-            Session::flash('success', trans('crud.success.deleted'));
+            if ($user->client->orders->count() === 0)
+            {
+                $user->delete();
+                Session::flash('success', trans('crud.success.deleted'));
+            }
+            else
+            {
+                Session::flash('error', trans_choice('crud.client_has_orders', $user->client->orders->count(), ['qtdOrders' => $user->client->orders->count()]));   
+            }
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'deleted']));
         }
