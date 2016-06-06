@@ -9,26 +9,31 @@
             @include('form_error')
 
         </div>
-        {!! Form::open(['route' => ['orderUpdate', $order->id], 'method' => 'PUT']) !!}
 
         <div class="row">
+            {!! Form::open(['route' => ['orderUpdate', $order->id], 'method' => 'PUT']) !!}
             <div class="col-md-4">
                 <div class="panel panel-default">
+                    <div class="panel-heading">Client</div>
+                    <div class="panel-body"><strong>{{$order->client->user->name}}</strong></div>
+                </div>
+                <div class="panel panel-default">
                     <div class="panel-body">
-                        Cliente: {{$order->client->user->name}}
+                        <div class="col-md-3">Delivery Man:</div>
+                        <div class="col-md-9">{!! Form::select('user_deleveryman_id', $deliveryMen, $order->client_id, ['class' => 'form-control']) !!}</div>
                     </div>
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        Delivery Man: {{$order->deliveryman->name}}
+                        <div class="col-md-3">Status:</div>
+                        <div class="col-md-9">{!! Form::select('status', $orderStatus, $order->status, ['class' => 'form-control']) !!}</div>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        Status: {{$orderStatus[$order->status]}}
-                    </div>
+                <div class="form-group">
+                    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
                 </div>
             </div>
+            {!! Form::close() !!}
             <div class="col-md-8">
                 <h2>Order Items <a href="{{route('orderAdd')}}" class="btn btn-success btn-sm" role="button">Add New Item</a></h2>
 
@@ -65,19 +70,7 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                </div>
-            </div>
-            <div class="col-md-6">
-
-            </div>
-        </div>
-        {!! Form::close() !!}
     </div>
     <!-- Deleting Confirmation Modal -->
     <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog">

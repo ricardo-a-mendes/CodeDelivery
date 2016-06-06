@@ -5,18 +5,29 @@ namespace CodeDelivery\Http\Controllers\Admin;
 use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Http\Requests;
 use CodeDelivery\Models\Order;
+use CodeDelivery\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Session;
 
 class OrderController extends Controller
 {
     private $order;
     private $orderStatus = [0 => 'Canceled', 1 => 'In Progress', 2 => 'Shipping', 3 => 'Finalized'];
+    private $deliveryMen;
 
-    public function __construct(Order $order)
+    public function __construct(Order $order, User $user)
     {
         $this->order = $order;
+
+        $deliveryMen = $user->select('id', 'name')
+            ->where('role', '=', 'deliveryman')
+            ->get();
+        foreach ($deliveryMen as $deliveryMan)
+        {
+            $this->deliveryMen[$deliveryMan->id] = $deliveryMan->name;
+        }
     }
 
     public function index()
@@ -41,9 +52,18 @@ class OrderController extends Controller
     public function edit($id)
     {
         try {
+            $q = DB::table('order_items')
+                ->selectRaw('sum(quantity*price) as total')
+                ->where('order_id', '=', $id)
+                //->get()
+                ->first()
+                //->toArray()
+            ;
+            dd($q->total);die;
             $order = $this->order->findOrFail($id);
             $orderStatus = $this->orderStatus;
-            return view('admin.order.update', compact('order', 'orderStatus'));
+            $deliveryMen = $this->deliveryMen;
+            return view('admin.order.update', compact('order', 'orderStatus', 'deliveryMen'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));
             return redirect()->route('orderList');
