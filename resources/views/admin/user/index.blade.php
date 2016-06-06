@@ -22,7 +22,7 @@
                         <td>{{$roles[$user->role]}}</td>
                         <td>
                             <a href="{{route('userEdit', ['id' => $user->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;
-                            <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{ $user->name }}"></span></a>&nbsp;
+                            <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('userDelete', ['id' => $user->id])}}|{{ $user->name }}"></span></a>&nbsp;
                         </td>
                     </tr>
                 @endforeach
@@ -43,7 +43,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <a class="btn btn-danger" href="{{route('userDelete', ['id' => $user->id])}}">Delete</a>
+                    <a class="btn btn-danger" href="#">Delete</a>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -52,9 +52,10 @@
         $(function() {
             $('#deleteConfirmationModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget); // Button that triggered the modal
-                var item = button.data('whatever'); // Extract info from data-* attributes
+                var params = button.data('whatever').split("|"); // Extract info from data-* attributes
                 var modal = $(this);
-                modal.find('.modal-body span#itemNameDestination').text(item)
+                modal.find('.modal-footer a').attr('href', params[0]);
+                modal.find('.modal-body span#itemNameDestination').text(params[1]);
             })
         });
     </script>
