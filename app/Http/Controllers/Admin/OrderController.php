@@ -23,6 +23,7 @@ class OrderController extends Controller
 
         $deliveryMen = $user->select('id', 'name')
             ->where('role', '=', 'deliveryman')
+            ->orderBy('name')
             ->get();
         foreach ($deliveryMen as $deliveryMan)
         {
@@ -52,14 +53,6 @@ class OrderController extends Controller
     public function edit($id)
     {
         try {
-            $q = DB::table('order_items')
-                ->selectRaw('sum(quantity*price) as total')
-                ->where('order_id', '=', $id)
-                //->get()
-                ->first()
-                //->toArray()
-            ;
-            dd($q->total);die;
             $order = $this->order->findOrFail($id);
             $orderStatus = $this->orderStatus;
             $deliveryMen = $this->deliveryMen;

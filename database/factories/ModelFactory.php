@@ -55,9 +55,17 @@ $factory->define(Client::class, function (Generator $faker) {
 });
 
 $factory->define(Order::class, function (Generator $faker) {
+
+    $clients = DB::table('clients')->get(['id']);
+    $clientID = rand(1, count($clients));
+
+    $deliveryMen = DB::table('users')->where('role', '=', 'deliveryman')->get(['id']);
+    $key = rand(0, count($deliveryMen)-1);
+    $deliveryManID = $deliveryMen[$key]->id;
+
     return [
-        'client_id' => $faker->numberBetween(1,10),
-        'user_deleveryman_id' => $faker->numberBetween(1,10),
+        'client_id' => $clientID,
+        'user_deleveryman_id' => $deliveryManID,
         'total' => $faker->randomFloat(2, 30, 1000),
         'status' => 1,
     ];
