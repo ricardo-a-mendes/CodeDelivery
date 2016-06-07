@@ -15,7 +15,7 @@ class OrderController extends Controller
 {
     private $order;
     private $orderStatus = [0 => 'Canceled', 1 => 'In Progress', 2 => 'Shipping', 3 => 'Finalized'];
-    private $deliveryMen;
+    private $deliveryMen = [0 => '-- Select --'];
 
     public function __construct(Order $order, User $user)
     {
@@ -66,7 +66,15 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $this->order->findOrFail($id)->fill($request->all())->save();
+            $itemsToSave = $request->all();
+
+            //If not selected
+            if ($request->input('user_deleveryman_id') === '0')
+            {
+               $itemsToSave = $request->except('user_deleveryman_id');
+            }
+            
+            $this->order->findOrFail($id)->fill($itemsToSave)->save();
             Session::flash('success', trans('crud.success.saved'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'updated']));

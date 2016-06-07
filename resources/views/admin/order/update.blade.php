@@ -20,7 +20,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="col-md-3">Delivery Man:</div>
-                        <div class="col-md-9">{!! Form::select('user_deleveryman_id', $deliveryMen, $order->deliveryman->id, ['class' => 'form-control']) !!}</div>
+                        <div class="col-md-9">{!! Form::select('user_deleveryman_id', $deliveryMen, isset($order->deliveryman->id) ? $order->deliveryman->id : 0, ['class' => 'form-control']) !!}</div>
                     </div>
                 </div>
                 <div class="panel panel-default">
