@@ -151,6 +151,9 @@ return [
         //https://laravelcollective.com/docs/5.2/html#installation
         Collective\Html\HtmlServiceProvider::class,
 
+        //https://github.com/andersao/l5-repository
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -158,6 +161,7 @@ return [
         CodeDelivery\Providers\AuthServiceProvider::class,
         CodeDelivery\Providers\EventServiceProvider::class,
         CodeDelivery\Providers\RouteServiceProvider::class,
+        CodeDelivery\Providers\RepositoryServiceProvider::class,
 
     ],
 

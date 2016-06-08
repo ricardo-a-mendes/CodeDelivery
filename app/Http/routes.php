@@ -11,9 +11,13 @@
 |
 */
 
+use CodeDelivery\Repositories\CategoryRepository;
+
 Route::get('/', function () {
-    echo 'teste';
-    //return view('welcome');
+
+    $repository = app()->make(CategoryRepository::class);
+    return $repository->all();
+
 });
 
 Route::pattern('id', '\d+');
