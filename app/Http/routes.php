@@ -47,3 +47,6 @@ Route::group(['prefix' => 'admin'], function(){
     Route::put('order/update/{id}', 'Admin\OrderController@update')->name('orderUpdate');
     Route::get('order/delete/{id}', 'Admin\OrderController@delete')->name('orderDelete');
 });
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
