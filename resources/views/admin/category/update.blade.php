@@ -1,18 +1,15 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="row page-header">
-                <h1>User Form <small>Update Record</small></h1>
-                <a class="btn btn-success" href="{{ route('userAdd') }}">New User</a>
-                <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteConfirmationModal">Delete this user</a>
-            </div>
-            @include('form_error')
+        <div class="row page-header">
+            <h1>Category Form <small>Update Record</small></h1>
+            <a class="btn btn-success" href="{{ route('categoryAdd') }}">New Category</a>
+            <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteConfirmationModal">Delete this category</a>
         </div>
+        @include('form_error')
+        {!! Form::open(['route' => ['categoryUpdate', $category->id], 'method' => 'PUT']) !!}
 
-        {!! Form::open(['route' => ['userUpdate', $user->id], 'method' => 'PUT']) !!}
-
-        @include('admin.user.fields')
+        @include('admin.category.fields')
 
         <div class="row">
             <div class="col-md-6">
@@ -34,12 +31,12 @@
                     <h4 class="modal-title">Deleting Confirmation</h4>
                 </div>
                 <div class="modal-body">
-                    <p>User to be deleted: <strong>{{ $user->name }}</strong></p>
+                    <p>Category to be deleted: <strong>{{ $category->name }}</strong></p>
                     <p>Are you sure ?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <a class="btn btn-danger" href="{{route('userDelete', ['id' => $user->id])}}">Delete</a>
+                    <a class="btn btn-danger" href="{{route('categoryDelete', ['id' => $category->id])}}">Delete</a>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

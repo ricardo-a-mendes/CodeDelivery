@@ -1,6 +1,6 @@
-@extends('base')
+@extends('layouts.app')
 @section('content')
-    <div class="content">
+    <div class="container">
         <div class="row">
             <div class="row page-header">
                 <h1>Order Form <small>Update Record</small></h1>

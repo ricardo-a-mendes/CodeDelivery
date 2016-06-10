@@ -22,15 +22,16 @@ class UserController extends Controller
 
     public function index()
     {
-        $userCollection = $this->user->all();
+        $userCollection = $this->user->paginate(10);
         $roles = $this->roles;
         return view('admin.user.index', compact('userCollection', 'roles'));
     }
 
     public function add()
     {
+        $user = $this->user;
         $roles = $this->roles;
-        return view('admin.user.create', compact('roles'));
+        return view('admin.user.create', compact('roles', 'user'));
     }
 
     public function create(UserCreateRequest $request)

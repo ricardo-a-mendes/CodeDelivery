@@ -1,16 +1,13 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-
-        <div class="row">
-            <div class="row page-header">
-                <h1>User Form <small>Create Record</small></h1>
-            </div>
-            @include('form_error')
+        <div class="row page-header">
+            <h1>Category Form <small>Create Record</small></h1>
         </div>
-        {!! Form::open(['route' => ['userCreate'], 'method' => 'POST']) !!}
+        @include('form_error')
+        {!! Form::open(['route' => ['categoryCreate', $category->id], 'method' => 'POST']) !!}
 
-        @include('admin.user.fields')
+        @include('admin.category.fields')
 
         <div class="row">
             <div class="col-md-6">

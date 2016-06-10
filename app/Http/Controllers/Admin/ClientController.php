@@ -5,7 +5,6 @@ namespace CodeDelivery\Http\Controllers\Admin;
 use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Requests\Admin\ClientCreateRequest;
-use CodeDelivery\Http\Requests\Admin\ClientRequest;
 use CodeDelivery\Http\Requests\Admin\ClientUpdateRequest;
 use CodeDelivery\Models\Client;
 use CodeDelivery\Models\User;
@@ -23,13 +22,15 @@ class ClientController extends Controller
 
     public function index()
     {
-        $clientCollection = $this->client->all();
+        $clientCollection = $this->client->paginate(10);
         return view('admin.client.index', compact('clientCollection'));
     }
 
     public function add()
     {
-        return view('admin.client.create');
+        $client = $this->client;
+        $client->user = new User();
+        return view('admin.client.create', compact('client'));
     }
 
     public function create(ClientCreateRequest $request, User $user)

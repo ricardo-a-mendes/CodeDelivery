@@ -1,20 +1,20 @@
-@extends('base')
+@extends('layouts.app')
 @section('content')
-    <div class="content">
+    <div class="container">
         <div class="row">
             <div class="row page-header">
                 <h1>Orders <small>Management Area</small></h1>
                 <a href="{{route('orderAdd')}}" class="btn btn-success">New Order</a>
             </div>
             <table class="table table-striped">
-                <tr>
+                <thead>
                     <th>Order ID</th>
                     <th>Client</th>
                     <th>Delivery Man</th>
                     <th>Total</th>
                     <th>Status</th>
                     <th>Action</th>
-                </tr>
+                </thead>
                 @foreach($orderCollection as $order)
                     <tr>
                         <td><a href="{{route('orderEdit', ['id' => $order->id])}}">{{$order->id}}</a></td>
@@ -29,5 +29,6 @@
                 @endforeach
             </table>
         </div>
+        {!! $orderCollection->render() !!}
     </div>
 @endsection

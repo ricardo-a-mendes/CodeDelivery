@@ -24,29 +24,46 @@ Route::pattern('id', '\d+');
 Route::group(['prefix' => 'admin'], function(){
 
     //Clients
-    Route::get('client/list', 'Admin\ClientController@index')->name('clientList');
-    Route::post('client', 'Admin\ClientController@create')->name('clientCreate');
-    Route::get('client/add', 'Admin\ClientController@add')->name('clientAdd');
-    Route::get('client/edit/{id}', 'Admin\ClientController@edit')->name('clientEdit');
-    Route::put('client/update/{id}', 'Admin\ClientController@update')->name('clientUpdate');
-    Route::get('client/delete/{id}', 'Admin\ClientController@delete')->name('clientDelete');
+    Route::group(['prefix' => 'client'], function() {
+        Route::get('list', 'Admin\ClientController@index')->name('clientList');
+        Route::post('/', 'Admin\ClientController@create')->name('clientCreate');
+        Route::get('add', 'Admin\ClientController@add')->name('clientAdd');
+        Route::get('edit/{id}', 'Admin\ClientController@edit')->name('clientEdit');
+        Route::put('update/{id}', 'Admin\ClientController@update')->name('clientUpdate');
+        Route::get('delete/{id}', 'Admin\ClientController@delete')->name('clientDelete');
+    });
 
     //Users
-    Route::get('user/list', 'Admin\UserController@index')->name('userList');
-    Route::post('user', 'Admin\UserController@create')->name('userCreate');
-    Route::get('user/add', 'Admin\UserController@add')->name('userAdd');
-    Route::get('user/edit/{id}', 'Admin\UserController@edit')->name('userEdit');
-    Route::put('user/update/{id}', 'Admin\UserController@update')->name('userUpdate');
-    Route::get('user/delete/{id}', 'Admin\UserController@delete')->name('userDelete');
+    Route::group(['prefix' => 'user'], function() {
+        Route::get('list', 'Admin\UserController@index')->name('userList');
+        Route::post('/', 'Admin\UserController@create')->name('userCreate');
+        Route::get('add', 'Admin\UserController@add')->name('userAdd');
+        Route::get('edit/{id}', 'Admin\UserController@edit')->name('userEdit');
+        Route::put('update/{id}', 'Admin\UserController@update')->name('userUpdate');
+        Route::get('delete/{id}', 'Admin\UserController@delete')->name('userDelete');
+    });
+
+    //Category
+    Route::group(['prefix' => 'category'], function() {
+        Route::get('list', 'Admin\CategoryController@index')->name('categoryList');
+        Route::post('', 'Admin\CategoryController@create')->name('categoryCreate');
+        Route::get('add', 'Admin\CategoryController@add')->name('categoryAdd');
+        Route::get('edit/{id}', 'Admin\CategoryController@edit')->name('categoryEdit');
+        Route::put('update/{id}', 'Admin\CategoryController@update')->name('categoryUpdate');
+        Route::get('delete/{id}', 'Admin\CategoryController@delete')->name('categoryDelete');
+    });
 
     //Orders
-    Route::get('order/list', 'Admin\OrderController@index')->name('orderList');
-    Route::post('order', 'Admin\OrderController@create')->name('orderCreate');
-    Route::get('order/add', 'Admin\OrderController@add')->name('orderAdd');
-    Route::get('order/edit/{id}', 'Admin\OrderController@edit')->name('orderEdit');
-    Route::put('order/update/{id}', 'Admin\OrderController@update')->name('orderUpdate');
-    Route::get('order/delete/{id}', 'Admin\OrderController@delete')->name('orderDelete');
+    Route::group(['prefix' => 'order'], function() {
+        Route::get('list', 'Admin\OrderController@index')->name('orderList');
+        Route::post('/', 'Admin\OrderController@create')->name('orderCreate');
+        Route::get('add', 'Admin\OrderController@add')->name('orderAdd');
+        Route::get('edit/{id}', 'Admin\OrderController@edit')->name('orderEdit');
+        Route::put('update/{id}', 'Admin\OrderController@update')->name('orderUpdate');
+        Route::get('delete/{id}', 'Admin\OrderController@delete')->name('orderDelete');
+    });
 });
+
 Route::auth();
 
 Route::get('/home', 'HomeController@index');

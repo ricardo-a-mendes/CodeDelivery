@@ -1,69 +1,14 @@
-@extends('base')
+@extends('layouts.app')
 @section('content')
-    <div class="content">
-        <div class="row">
-            <h1>Client Form</h1>
+    <div class="container">
+        <div class="row page-header">
+            <h1>Client Form <small>Create Record</small></h1>
             @include('form_error')
         </div>
         {!! Form::open(['route' => ['clientCreate'], 'method' => 'POST']) !!}
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    {!! Form::label('name', 'Name') !!}
-                    {!! Form::text('name', null, ['class' => 'form-control']) !!}
-                </div>
-                <div class="form-group">
-                    {!! Form::label('email', 'Email') !!}
-                    {!! Form::email('email', null, ['class' => 'form-control']) !!}
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group row">
-                    {!! Form::label('password', 'Password') !!}
-                    {!! Form::password('password', ['class' => 'form-control']) !!}
-                </div>
-                <div class="form-group row">
-                    {!! Form::label('password_confirmation', 'Retype Password') !!}
-                    {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    {!! Form::label('address', 'Address') !!}
-                    {!! Form::textarea('address', null, ['class' => 'form-control']) !!}
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="form-group">
-                        {!! Form::label('city', 'City') !!}
-                        {!! Form::text('city', null, ['class' => 'form-control']) !!}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group">
-                        {!! Form::label('state', 'State') !!}
-                        {!! Form::text('state', null, ['class' => 'form-control']) !!}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group">
-                        {!! Form::label('zipcode', 'Zip') !!}
-                        {!! Form::text('zipcode', null, ['class' => 'form-control']) !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
 
-            </div>
-            <div class="col-md-6">
+        @include('admin.client.fields')
 
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">

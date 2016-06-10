@@ -5,11 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Code Delivery</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
+
+    <!-- Latest compiled and minified jQuery -->
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -46,9 +49,12 @@
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
-                </ul>
+                <div class="nav navbar-nav">
+                    <a href="{{route('userList')}}" class="btn btn-default navbar-btn">Users</a>
+                    <a href="{{route('clientList')}}" class="btn btn-default navbar-btn">Clients</a>
+                    <a href="{{route('orderList')}}" class="btn btn-default navbar-btn">Orders</a>
+                    <a href="{{route('categoryList')}}" class="btn btn-default navbar-btn">Categories</a>
+                </div>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
@@ -71,6 +77,18 @@
             </div>
         </div>
     </nav>
+
+    @if (Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            <strong>Well done \o/</strong> {{ Session::get('success') }}
+        </div>
+    @endif
+
+    @if (Session::has('error'))
+        <div class="alert alert-danger" role="alert">
+            <strong>Oh snap :(</strong> {{ Session::get('error') }}
+        </div>
+    @endif
 
     @yield('content')
 

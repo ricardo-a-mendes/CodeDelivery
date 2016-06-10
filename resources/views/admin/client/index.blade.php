@@ -1,18 +1,18 @@
-@extends('base')
+@extends('layouts.app')
 @section('content')
-    <div class="content">
+    <div class="container">
         <div class="row">
             <div class="row page-header">
                 <h1>Clients <small>Management Area</small></h1>
                 <a href="{{route('clientAdd')}}" class="btn btn-success">New Client</a>
             </div>
             <table class="table table-striped">
-                <tr>
+                <thead>
                     <th>ID</th>
                     <th>Name</th>
                     <th>Address</th>
                     <th>Action</th>
-                </tr>
+                </thead>
                 @foreach($clientCollection as $client)
                     <tr>
                         <td><a href="{{route('clientEdit', ['id' => $client->id])}}">{{$client->id}}</a></td>
@@ -26,6 +26,7 @@
                 @endforeach
             </table>
         </div>
+        {!! $clientCollection->render() !!}
     </div>
 
     <!-- Deleting Confirmation Modal -->

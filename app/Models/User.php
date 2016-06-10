@@ -34,4 +34,12 @@ class User extends Authenticatable implements Transformable
         return $this->hasOne(Client::class);
     }
 
+    public function getDeliveryMen()
+    {
+        return $this->select('id', 'name')
+            ->where('role', '=', 'deliveryman')
+            ->orderBy('name')
+            ->get();
+    }
+
 }

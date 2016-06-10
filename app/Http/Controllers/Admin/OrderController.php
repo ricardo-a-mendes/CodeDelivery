@@ -8,7 +8,6 @@ use CodeDelivery\Models\Order;
 use CodeDelivery\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Session;
 
 class OrderController extends Controller
@@ -21,10 +20,7 @@ class OrderController extends Controller
     {
         $this->order = $order;
 
-        $deliveryMen = $user->select('id', 'name')
-            ->where('role', '=', 'deliveryman')
-            ->orderBy('name')
-            ->get();
+        $deliveryMen = $user->getDeliveryMen();
         foreach ($deliveryMen as $deliveryMan)
         {
             $this->deliveryMen[$deliveryMan->id] = $deliveryMan->name;
@@ -33,7 +29,7 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orderCollection = $this->order->all();
+        $orderCollection = $this->order->paginate(10);
         $orderStatus = $this->orderStatus;
         return view('admin.order.index', compact('orderCollection', 'orderStatus'));
     }

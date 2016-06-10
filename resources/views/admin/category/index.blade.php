@@ -1,35 +1,37 @@
 @extends('layouts.app')
+
 @section('content')
     <div class="container">
         <div class="row">
             <div class="row page-header">
-                <h1>Users <small>Management Area</small></h1>
-                <a href="{{route('userAdd')}}" class="btn btn-success">New User</a>
+                <h1>Categories <small>Management Area</small></h1>
+                <a href="{{route('categoryAdd')}}" class="btn btn-success">New Category</a>
             </div>
             <table class="table table-striped">
                 <thead>
-                    <th>ID</th>
+                <tr>
+                    <th>Id</th>
                     <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
                     <th>Action</th>
+                </tr>
                 </thead>
-                @foreach($userCollection as $user)
-                    <tr>
-                        <td><a href="{{route('userEdit', ['id' => $user->id])}}">{{$user->id}}</a></td>
-                        <td>{{$user->name}}</td>
-                        <td>{{$user->email}}</td>
-                        <td>{{$roles[$user->role]}}</td>
-                        <td>
-                            <a href="{{route('userEdit', ['id' => $user->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;
-                            <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('userDelete', ['id' => $user->id])}}|{{ $user->name }}"></span></a>&nbsp;
-                        </td>
-                    </tr>
+                <tbody>
+                @foreach($categoryCollection as $category)
+                <tr>
+                    <td>{{$category->id}}</td>
+                    <td>{{$category->name}}</td>
+                    <td>
+                        <a href="{{route('categoryEdit', ['id' => $category->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;
+                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('categoryDelete', ['id' => $category->id])}}|{{ $category->name }}"></span></a>&nbsp;
+                    </td>
+                </tr>
                 @endforeach
+                </tbody>
             </table>
         </div>
-        {!! $userCollection->render() !!}
+        {!! $categoryCollection->render() !!}
     </div>
+
     <!-- Deleting Confirmation Modal -->
     <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
@@ -39,7 +41,7 @@
                     <h4 class="modal-title">Deleting Confirmation</h4>
                 </div>
                 <div class="modal-body">
-                    <p>User to be deleted: <strong><span id="itemNameDestination"></span></strong></p>
+                    <p>Category to be deleted: <strong><span id="itemNameDestination"></span></strong></p>
                     <p>Are you sure ?</p>
                 </div>
                 <div class="modal-footer">
@@ -55,6 +57,7 @@
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var params = button.data('whatever').split("|"); // Extract info from data-* attributes
                 var modal = $(this);
+                console.log(params);
                 modal.find('.modal-footer a').attr('href', params[0]);
                 modal.find('.modal-body span#itemNameDestination').text(params[1]);
             })
