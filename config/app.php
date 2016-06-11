@@ -212,6 +212,8 @@ return [
         //https://laravelcollective.com/docs/5.2/html#installation
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        
+        'FormHelper' => CodeDelivery\Helpers\FormHelper::class,
 
     ],
 

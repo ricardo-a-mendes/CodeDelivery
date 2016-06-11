@@ -31,5 +31,10 @@ class Order extends Model implements Transformable
     {
         return $this->belongsTo(Client::class);
     }
+    
+    public function getOrderStatusOptions()
+    {
+        return [0 => 'Canceled', 1 => 'In Progress', 2 => 'Shipping', 3 => 'Finalized'];
+    }
 
 }

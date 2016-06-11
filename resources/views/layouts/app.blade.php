@@ -43,7 +43,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    CodePad
                 </a>
             </div>
 
@@ -78,17 +78,21 @@
         </div>
     </nav>
 
-    @if (Session::has('success'))
-        <div class="alert alert-success" role="alert">
-            <strong>Well done \o/</strong> {{ Session::get('success') }}
-        </div>
-    @endif
+    <div class="container">
+        <div class="row">
+            @if (Session::has('success'))
+                <div class="alert alert-success" role="alert">
+                    <strong>Well done \o/ - </strong> {{ Session::get('success') }}
+                </div>
+            @endif
 
-    @if (Session::has('error'))
-        <div class="alert alert-danger" role="alert">
-            <strong>Oh snap :(</strong> {{ Session::get('error') }}
+            @if (Session::has('error'))
+                <div class="alert alert-danger" role="alert">
+                    <strong>Oh snap :(</strong> {{ Session::get('error') }}
+                </div>
+            @endif
         </div>
-    @endif
+    </div>
 
     @yield('content')
 

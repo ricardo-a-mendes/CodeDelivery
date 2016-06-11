@@ -11,12 +11,12 @@
 |
 */
 
-use CodeDelivery\Repositories\CategoryRepository;
+use CodeDelivery\Models\Category;
+use CodeDelivery\Models\User;
 
 Route::get('/', function () {
 
-    $repository = app()->make(CategoryRepository::class);
-    return $repository->all();
+    return redirect('/home');
 
 });
 

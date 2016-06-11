@@ -2,6 +2,7 @@
 
 namespace CodeDelivery\Http\Controllers\Admin;
 
+use CodeDelivery\Helpers\FormHelper;
 use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Http\Requests;
 use CodeDelivery\Models\Order;
@@ -13,24 +14,16 @@ use Session;
 class OrderController extends Controller
 {
     private $order;
-    private $orderStatus = [0 => 'Canceled', 1 => 'In Progress', 2 => 'Shipping', 3 => 'Finalized'];
-    private $deliveryMen = [0 => '-- Select --'];
 
-    public function __construct(Order $order, User $user)
+    public function __construct(Order $order)
     {
         $this->order = $order;
-
-        $deliveryMen = $user->getDeliveryMen();
-        foreach ($deliveryMen as $deliveryMan)
-        {
-            $this->deliveryMen[$deliveryMan->id] = $deliveryMan->name;
-        }
     }
 
     public function index()
     {
         $orderCollection = $this->order->paginate(10);
-        $orderStatus = $this->orderStatus;
+        $orderStatus = $this->order->getOrderStatusOptions();
         return view('admin.order.index', compact('orderCollection', 'orderStatus'));
     }
 
@@ -46,12 +39,13 @@ class OrderController extends Controller
         return redirect()->route('orderList');
     }
 
-    public function edit($id)
+    public function edit($id, User $user)
     {
         try {
             $order = $this->order->findOrFail($id);
-            $orderStatus = $this->orderStatus;
-            $deliveryMen = $this->deliveryMen;
+            $orderStatus = $this->order->getOrderStatusOptions();
+
+            $deliveryMen = FormHelper::bindDropDown($user->getDeliveryMen());
             return view('admin.order.update', compact('order', 'orderStatus', 'deliveryMen'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));

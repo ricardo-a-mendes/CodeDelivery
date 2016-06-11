@@ -36,10 +36,9 @@ class User extends Authenticatable implements Transformable
 
     public function getDeliveryMen()
     {
-        return $this->select('id', 'name')
-            ->where('role', '=', 'deliveryman')
+        return $this->where('role', '=', 'deliveryman')
             ->orderBy('name')
-            ->get();
+            ->lists('name', 'id');
     }
 
 }
