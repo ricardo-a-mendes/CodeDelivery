@@ -13,7 +13,7 @@ use Session;
 class UserController extends Controller
 {
     private $user;
-    private $roles = ['client' => 'Client', 'deliveryman' => 'Delivery Man'];
+    private $roles = ['admin' => 'Admin', 'client' => 'Client', 'deliveryman' => 'Delivery Man'];
 
     public function __construct(User $user)
     {

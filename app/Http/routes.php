@@ -21,7 +21,7 @@ Route::get('/', function () {
 });
 
 Route::pattern('id', '\d+');
-Route::group(['prefix' => 'admin'], function(){
+Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function(){
 
     //Clients
     Route::group(['prefix' => 'client'], function() {

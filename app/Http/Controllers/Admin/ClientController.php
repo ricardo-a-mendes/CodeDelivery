@@ -64,6 +64,8 @@ class ClientController extends Controller
         if ($request->has('password') === false) {
             $except->push('password');
         }
+
+        //Removing 'password_confirmation' and 'password' when applicable
         $arrRequest = $request->except($except->all());
 
         try {

@@ -2,7 +2,8 @@
 
 namespace CodeDelivery\Helpers;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection as SupportCollection;
 
 /**
  * Class FormHelper
@@ -24,7 +25,7 @@ class FormHelper
         if (is_array($dropdownContent))
             $data = $dropdownContent;
         
-        if ($dropdownContent instanceof \Illuminate\Support\Collection || $dropdownContent instanceof Collection)
+        if ($dropdownContent instanceof SupportCollection || $dropdownContent instanceof EloquentCollection)
             $data = $dropdownContent->all();
             
         return ($select + $data);
