@@ -15,7 +15,12 @@
             <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">Client</div>
-                    <div class="panel-body"><strong>{{$order->client->user->name}}</strong></div>
+                    <div class="panel-body">
+                        <strong>{{$order->client->user->name}}</strong><br>
+                        {{$order->client->address}}<br>
+                        {{$order->client->city}} | {{$order->client->state}} | {{$order->client->zipcode}}
+                    </div>
+
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -51,7 +56,7 @@
                     <tfoot>
                     <tr>
                         <td colspan="4" style="text-align: right"><strong>Total</strong></td>
-                        <td colspan="2">{{$order->total}}</td>
+                        <td colspan="2">{{FormatHelper::moneyBR($order->total)}}</td>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -59,9 +64,9 @@
                         <tr>
                             <td>{{$item->product->id}}</td>
                             <td>{{$item->product->name}}</td>
-                            <td>{{$item->product->price}}</td>
+                            <td>{{FormatHelper::moneyBR($item->product->price)}}</td>
                             <td>{{$item->quantity}}</td>
-                            <td>{{$item->price}}</td>
+                            <td>{{FormatHelper::moneyBR($item->price)}}</td>
                             <td>
                                 <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{ $item->product->name }}"></span></a>&nbsp;
                             </td>

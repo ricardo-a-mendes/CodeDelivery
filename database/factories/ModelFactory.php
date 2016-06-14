@@ -47,7 +47,7 @@ $factory->define(Product::class, function (Generator $faker) {
 $factory->define(Client::class, function (Generator $faker) {
     return [
         'phone' => $faker->phoneNumber,
-        'address' => $faker->address,
+        'address' => $faker->streetAddress,
         'city' => $faker->city,
         'state' => $faker->state,
         'zipcode' => $faker->postcode,
