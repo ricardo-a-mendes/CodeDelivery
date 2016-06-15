@@ -54,6 +54,7 @@
                     <a href="{{route('clientList')}}" class="btn btn-default navbar-btn">Clients</a>
                     <a href="{{route('orderList')}}" class="btn btn-default navbar-btn">Orders</a>
                     <a href="{{route('categoryList')}}" class="btn btn-default navbar-btn">Categories</a>
+                    <a href="{{route('cupomList')}}" class="btn btn-default navbar-btn">Cupoms</a>
                 </div>
 
                 <!-- Right Side Of Navbar -->
