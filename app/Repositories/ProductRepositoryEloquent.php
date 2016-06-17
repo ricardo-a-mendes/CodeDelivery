@@ -24,13 +24,16 @@ class ProductRepositoryEloquent extends BaseRepository implements ProductReposit
         return Product::class;
     }
 
-    
-
     /**
      * Boot up the repository, pushing criteria
      */
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
+    }
+    
+    public function fof($id)
+    {
+        return $this->model->findOrFail($id);
     }
 }

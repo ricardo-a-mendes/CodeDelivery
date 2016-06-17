@@ -64,6 +64,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function()
     });
 });
 
+Route::group(['prefix' => 'customer'], function (){
+    Route::get('order/create', 'CheckoutController@create')->name('customerOrderNew');
+});
+
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
