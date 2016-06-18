@@ -20,7 +20,7 @@
                         <td><a href="{{route('orderEdit', ['id' => $order->id])}}">{{$order->id}}</a></td>
                         <td><a href="{{route('clientEdit', ['id' => $order->client->id])}}">{{$order->client->user->name}}</a></td>
                         <td>{{$order->deliveryman->name or ''}}</td>
-                        <td>{{$order->total}}</td>
+                        <td>{{FormatHelper::moneyBR($order->total)}}</td>
                         <td>{{$orderStatus[$order->status]}}</td>
                         <td>
                             <a href="{{route('orderEdit', ['id' => $order->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>

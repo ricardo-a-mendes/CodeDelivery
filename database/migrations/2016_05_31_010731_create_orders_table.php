@@ -14,11 +14,16 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
+
             $table->unsignedInteger('client_id');
             $table->foreign('client_id')->references('id')->on('users');
 
             $table->unsignedInteger('user_deleveryman_id')->nullable();
             $table->foreign('user_deleveryman_id')->references('id')->on('users');
+
+            $table->unsignedInteger('cupom_id')->nullable();
+            $table->foreign('cupom_id')->references('id')->on('cupoms');
+
             $table->decimal('total');
             $table->smallInteger('status')->default(0);
             $table->timestamps();

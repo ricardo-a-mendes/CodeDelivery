@@ -14,6 +14,7 @@
 
 use CodeDelivery\Models\Category;
 use CodeDelivery\Models\Client;
+use CodeDelivery\Models\Cupom;
 use CodeDelivery\Models\Order;
 use CodeDelivery\Models\OrderItems;
 use CodeDelivery\Models\Product;
@@ -47,7 +48,7 @@ $factory->define(Product::class, function (Generator $faker) {
 $factory->define(Client::class, function (Generator $faker) {
     return [
         'phone' => $faker->phoneNumber,
-        'address' => $faker->address,
+        'address' => $faker->streetAddress,
         'city' => $faker->city,
         'state' => $faker->state,
         'zipcode' => $faker->postcode,
@@ -76,5 +77,20 @@ $factory->define(OrderItems::class, function (Generator $faker) {
         'product_id' => $faker->numberBetween(1,150),
         'quantity' => $faker->numberBetween(1, 7),
         'price' => $faker->randomFloat(2, 30, 1000),
+    ];
+});
+
+$factory->define(OrderItems::class, function (Generator $faker) {
+    return [
+        'product_id' => $faker->numberBetween(1,150),
+        'quantity' => $faker->numberBetween(1, 7),
+        'price' => $faker->randomFloat(2, 30, 1000),
+    ];
+});
+
+$factory->define(Cupom::class, function (Generator $faker) {
+    return [
+        'code' => rand(100,10000),
+        'value' => rand(50,100)
     ];
 });

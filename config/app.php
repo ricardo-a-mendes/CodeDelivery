@@ -214,6 +214,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         
         'FormHelper' => CodeDelivery\Helpers\FormHelper::class,
+        'FormatHelper' => CodeDelivery\Helpers\FormatHelper::class,
 
     ],
 
