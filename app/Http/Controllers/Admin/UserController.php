@@ -6,7 +6,7 @@ use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Requests\Admin\UserCreateRequest;
 use CodeDelivery\Http\Requests\Admin\UserUpdateRequest;
-use CodeDelivery\Models\User;
+use CodeDelivery\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Session;
 
@@ -15,7 +15,7 @@ class UserController extends Controller
     private $user;
     private $roles = ['admin' => 'Admin', 'client' => 'Client', 'deliveryman' => 'Delivery Man'];
 
-    public function __construct(User $user)
+    public function __construct(UserRepository $user)
     {
         $this->user = $user;
     }

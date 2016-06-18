@@ -33,4 +33,25 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
+    /**
+     * Try to find the model. If it fails, throw a ModelNotFoundException
+     *
+     * @param $id
+     * @return mixed
+     *
+     * @throws ModelNotFoundException
+     */
+    public function findOrFail($id)
+    {
+        return $this->model->findOrFail($id);
+    }
+
+    /**
+     * @return Options to populate Status Combo for Orders
+     */
+    public function getOrderStatusOptions()
+    {
+        return [0 => 'Canceled', 1 => 'In Progress', 2 => 'Shipping', 3 => 'Finalized'];
+    }
 }

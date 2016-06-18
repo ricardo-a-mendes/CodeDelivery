@@ -6,8 +6,8 @@ use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Requests\Admin\ClientCreateRequest;
 use CodeDelivery\Http\Requests\Admin\ClientUpdateRequest;
-use CodeDelivery\Models\Client;
 use CodeDelivery\Models\User;
+use CodeDelivery\Repositories\ClientRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Session;
 
@@ -15,7 +15,7 @@ class ClientController extends Controller
 {
     private $client;
 
-    public function __construct(Client $client)
+    public function __construct(ClientRepository $client)
     {
         $this->client = $client;
     }

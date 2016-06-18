@@ -10,5 +10,13 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface ProductRepository extends RepositoryInterface
 {
-    public function fof($id);
+    /**
+     * Try to find the model. If it fails, throw a ModelNotFoundException
+     *
+     * @param $id
+     * @return mixed
+     *
+     * @throws ModelNotFoundException
+     */
+    public function findOrFail($id);
 }

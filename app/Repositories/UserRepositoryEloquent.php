@@ -2,6 +2,7 @@
 
 namespace CodeDelivery\Repositories;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use CodeDelivery\Repositories\UserRepository;
@@ -32,5 +33,18 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    /**
+     * Try to find the model. If it fails, throw a ModelNotFoundException
+     * 
+     * @param $id
+     * @return mixed
+     * 
+     * @throws ModelNotFoundException
+     */
+    public function findOrFail($id)
+    {
+        return $this->model->findOrFail($id);
     }
 }

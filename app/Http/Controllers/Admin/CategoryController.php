@@ -5,7 +5,7 @@ namespace CodeDelivery\Http\Controllers\Admin;
 use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Requests\Admin\CategoryRequest;
-use CodeDelivery\Models\Category;
+use CodeDelivery\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Session;
 
@@ -14,7 +14,7 @@ class CategoryController extends Controller
 
     private $category;
 
-    public function __construct(Category $category)
+    public function __construct(CategoryRepository $category)
     {
         $this->category = $category;
     }

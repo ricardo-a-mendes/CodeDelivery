@@ -5,8 +5,8 @@ namespace CodeDelivery\Http\Controllers\Admin;
 use CodeDelivery\Helpers\FormHelper;
 use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Http\Requests;
-use CodeDelivery\Models\Order;
-use CodeDelivery\Models\User;
+use CodeDelivery\Repositories\OrderRepository;
+use CodeDelivery\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Session;
@@ -15,7 +15,7 @@ class OrderController extends Controller
 {
     private $order;
 
-    public function __construct(Order $order)
+    public function __construct(OrderRepository $order)
     {
         $this->order = $order;
     }
@@ -39,7 +39,7 @@ class OrderController extends Controller
         return redirect()->route('orderList');
     }
 
-    public function edit($id, User $user)
+    public function edit($id, UserRepository $user)
     {
         try {
             $order = $this->order->findOrFail($id);

@@ -10,5 +10,13 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface UserRepository extends RepositoryInterface
 {
-    //
+    /**
+     * Try to find the model. If it fails, throw a ModelNotFoundException
+     *
+     * @param $id
+     * @return mixed
+     *
+     * @throws ModelNotFoundException
+     */
+    public function findOrFail($id);
 }

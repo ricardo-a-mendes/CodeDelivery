@@ -33,4 +33,17 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
+    /**
+     * Try to find the model. If it fails, throw a ModelNotFoundException
+     *
+     * @param $id
+     * @return mixed
+     *
+     * @throws ModelNotFoundException
+     */
+    public function findOrFail($id)
+    {
+        return $this->model->findOrFail($id);
+    }
 }

@@ -6,6 +6,7 @@ use CodeDelivery\Http\Requests;
 use CodeDelivery\Models\Order;
 use CodeDelivery\Models\User;
 use CodeDelivery\Repositories\ProductRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CheckoutController extends Controller
 {
@@ -32,8 +33,14 @@ class CheckoutController extends Controller
 
     public function create()
     {
-        $products = $this->product->lists('name', 'id');
-        $products1= $this->product->fof(1);
+        $products = [];
+        try {
+            //$products = $this->product->lists('name', 'id');
+            $products = $this->product->findOrFail(1000000);
+        } catch (ModelNotFoundException $e) {
+            echo $e->getTraceAsString();
+        }
+        
         return view('customer.order.create', compact('products'));
     }
 }
