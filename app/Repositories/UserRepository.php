@@ -19,4 +19,11 @@ interface UserRepository extends RepositoryInterface
      * @throws ModelNotFoundException
      */
     public function findOrFail($id);
+
+    /**
+     * Get a list of Delivery Man to populate a combo
+     *
+     * @return array
+     */
+    public function getDeliveryMen($orderBy);
 }

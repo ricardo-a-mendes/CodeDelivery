@@ -47,4 +47,16 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     {
         return $this->model->findOrFail($id);
     }
+
+    /**
+     * Get a list of Delivery Man to populate a combo
+     * 
+     * @return array
+     */
+    public function getDeliveryMen($orderBy = 'name')
+    {
+        return $this->model->where('role', '=', 'deliveryman')
+            ->orderBy($orderBy)
+            ->lists('name', 'id');
+    }
 }
