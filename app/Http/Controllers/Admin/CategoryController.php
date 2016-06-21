@@ -35,7 +35,7 @@ class CategoryController extends Controller
     {
         $this->category->fill($request->all())->save();
         Session::flash('success', trans('crud.success.saved'));
-        return redirect()->route('categoryList');
+        return redirect()->route('adminCategoryList');
     }
 
     public function edit($id)
@@ -45,7 +45,7 @@ class CategoryController extends Controller
             return view('admin.category.update', compact('category'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));
-            return redirect()->route('categoryList');
+            return redirect()->route('adminCategoryList');
         }
     }
 
@@ -58,7 +58,7 @@ class CategoryController extends Controller
             Session::flash('error', trans('crud.record_not_found', ['action' => 'updated']));
         }
 
-        return redirect()->route('categoryList');
+        return redirect()->route('adminCategoryList');
     }
 
     public function delete($id)
@@ -71,6 +71,6 @@ class CategoryController extends Controller
             Session::flash('error', trans('crud.record_not_found', ['action' => 'deleted']));
         }
 
-        return redirect()->route('categoryList');
+        return redirect()->route('adminCategoryList');
     }
 }

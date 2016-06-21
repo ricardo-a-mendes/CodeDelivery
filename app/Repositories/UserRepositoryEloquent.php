@@ -2,12 +2,11 @@
 
 namespace CodeDelivery\Repositories;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use CodeDelivery\Repositories\UserRepository;
 use CodeDelivery\Models\User;
 use CodeDelivery\Validators\UserValidator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 
 /**
  * Class UserRepositoryEloquent

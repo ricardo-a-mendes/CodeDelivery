@@ -38,7 +38,7 @@ class UserController extends Controller
     {
         $this->user->fill($request->all())->save();
         Session::flash('success', trans('crud.success.saved'));
-        return redirect()->route('userList');
+        return redirect()->route('adminUserList');
     }
 
     public function edit($id)
@@ -49,7 +49,7 @@ class UserController extends Controller
             return view('admin.user.update', compact('user','roles'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));
-            return redirect()->route('userList');
+            return redirect()->route('adminUserList');
         }
     }
 
@@ -62,7 +62,7 @@ class UserController extends Controller
             Session::flash('error', trans('crud.record_not_found', ['action' => 'updated']));
         }
 
-        return redirect()->route('userList');
+        return redirect()->route('adminUserList');
     }
 
     public function delete($id)
@@ -83,6 +83,6 @@ class UserController extends Controller
             Session::flash('error', trans('crud.record_not_found', ['action' => 'deleted']));
         }
 
-        return redirect()->route('userList');
+        return redirect()->route('adminUserList');
     }
 }

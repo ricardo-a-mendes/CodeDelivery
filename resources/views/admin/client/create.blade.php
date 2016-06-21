@@ -5,7 +5,7 @@
             <h1>Client Form <small>Create Record</small></h1>
             @include('form_error')
         </div>
-        {!! Form::open(['route' => ['clientCreate'], 'method' => 'POST']) !!}
+        {!! Form::open(['route' => ['adminClientCreate'], 'method' => 'POST']) !!}
 
         @include('admin.client.fields')
 

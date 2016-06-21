@@ -5,7 +5,7 @@
         <div class="row">
             <div class="row page-header">
                 <h1>Categories <small>Management Area</small></h1>
-                <a href="{{route('categoryAdd')}}" class="btn btn-success">New Category</a>
+                <a href="{{route('adminCategoryAdd')}}" class="btn btn-success">New Category</a>
             </div>
             <table class="table table-striped">
                 <thead>
@@ -21,8 +21,8 @@
                     <td>{{$category->id}}</td>
                     <td>{{$category->name}}</td>
                     <td>
-                        <a href="{{route('categoryEdit', ['id' => $category->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;
-                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('categoryDelete', ['id' => $category->id])}}|{{ $category->name }}"></span></a>&nbsp;
+                        <a href="{{route('adminCategoryEdit', ['id' => $category->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;
+                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('adminCategoryDelete', ['id' => $category->id])}}|{{ $category->name }}"></span></a>&nbsp;
                     </td>
                 </tr>
                 @endforeach

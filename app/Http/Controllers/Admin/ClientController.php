@@ -44,7 +44,7 @@ class ClientController extends Controller
 
         Session::flash('success', trans('crud.success.saved'));
 
-        return redirect()->route('clientList');
+        return redirect()->route('adminClientList');
     }
 
     public function edit($id)
@@ -54,7 +54,7 @@ class ClientController extends Controller
             return view('admin.client.update', compact('client'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));
-            return redirect()->route('clientList');
+            return redirect()->route('adminClientList');
         }
     }
 
@@ -80,7 +80,7 @@ class ClientController extends Controller
             Session::flash('error', trans('crud.record_not_found', ['action' => 'updated']));
         }
 
-        return redirect()->route('clientList');
+        return redirect()->route('adminClientList');
     }
 
     public function delete($id)
@@ -102,7 +102,7 @@ class ClientController extends Controller
             Session::flash('error', trans('crud.record_not_found', ['action' => 'deleted']));
         }
 
-        return redirect()->route('clientList');
+        return redirect()->route('adminClientList');
     }
 
 

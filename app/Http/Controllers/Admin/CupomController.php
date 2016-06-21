@@ -34,7 +34,7 @@ class CupomController extends Controller
     {
         $this->cupom->fill($request->all())->save();
         Session::flash('success', trans('crud.success.saved'));
-        return redirect()->route('cupomList');
+        return redirect()->route('adminCupomList');
     }
 
     public function edit($id)
@@ -44,7 +44,7 @@ class CupomController extends Controller
             return view('admin.cupom.update', compact('cupom'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));
-            return redirect()->route('cupomList');
+            return redirect()->route('adminCupomList');
         }
     }
 
@@ -53,10 +53,10 @@ class CupomController extends Controller
         try {
             $this->cupom->findOrFail($id)->fill($request->all())->save();
             Session::flash('success', trans('crud.success.saved'));
-            return redirect()->route('cupomList');
+            return redirect()->route('adminCupomList');
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'updated']));
-            return redirect()->route('cupomList');
+            return redirect()->route('adminCupomList');
         }
     }
 
@@ -65,10 +65,10 @@ class CupomController extends Controller
         try {
             $this->cupom->findOrFail($id)->delete();
             Session::flash('success', trans('crud.success.deleted'));
-            return redirect()->route('cupomList');
+            return redirect()->route('adminCupomList');
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'deleted']));
         }
-        return redirect()->route('cupomList');
+        return redirect()->route('adminCupomList');
     }
 }

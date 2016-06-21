@@ -25,52 +25,52 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function()
 
     //Clients
     Route::group(['prefix' => 'client'], function() {
-        Route::get('list', 'Admin\ClientController@index')->name('clientList');
-        Route::post('/', 'Admin\ClientController@create')->name('clientCreate');
-        Route::get('add', 'Admin\ClientController@add')->name('clientAdd');
-        Route::get('edit/{id}', 'Admin\ClientController@edit')->name('clientEdit');
-        Route::put('update/{id}', 'Admin\ClientController@update')->name('clientUpdate');
-        Route::get('delete/{id}', 'Admin\ClientController@delete')->name('clientDelete');
+        Route::get('list', 'Admin\ClientController@index')->name('adminClientList');
+        Route::post('/', 'Admin\ClientController@create')->name('adminClientCreate');
+        Route::get('add', 'Admin\ClientController@add')->name('adminClientAdd');
+        Route::get('edit/{id}', 'Admin\ClientController@edit')->name('adminClientEdit');
+        Route::put('update/{id}', 'Admin\ClientController@update')->name('adminClientUpdate');
+        Route::get('delete/{id}', 'Admin\ClientController@delete')->name('adminClientDelete');
     });
 
     //Users
     Route::group(['prefix' => 'user'], function() {
-        Route::get('list', 'Admin\UserController@index')->name('userList');
-        Route::post('/', 'Admin\UserController@create')->name('userCreate');
-        Route::get('add', 'Admin\UserController@add')->name('userAdd');
-        Route::get('edit/{id}', 'Admin\UserController@edit')->name('userEdit');
-        Route::put('update/{id}', 'Admin\UserController@update')->name('userUpdate');
-        Route::get('delete/{id}', 'Admin\UserController@delete')->name('userDelete');
+        Route::get('list', 'Admin\UserController@index')->name('adminUserList');
+        Route::post('/', 'Admin\UserController@create')->name('adminUserCreate');
+        Route::get('add', 'Admin\UserController@add')->name('adminUserAdd');
+        Route::get('edit/{id}', 'Admin\UserController@edit')->name('adminUserEdit');
+        Route::put('update/{id}', 'Admin\UserController@update')->name('adminUserUpdate');
+        Route::get('delete/{id}', 'Admin\UserController@delete')->name('adminUserDelete');
     });
 
     //Category
     Route::group(['prefix' => 'category'], function() {
-        Route::get('list', 'Admin\CategoryController@index')->name('categoryList');
-        Route::post('', 'Admin\CategoryController@create')->name('categoryCreate');
-        Route::get('add', 'Admin\CategoryController@add')->name('categoryAdd');
-        Route::get('edit/{id}', 'Admin\CategoryController@edit')->name('categoryEdit');
-        Route::put('update/{id}', 'Admin\CategoryController@update')->name('categoryUpdate');
-        Route::get('delete/{id}', 'Admin\CategoryController@delete')->name('categoryDelete');
+        Route::get('list', 'Admin\CategoryController@index')->name('adminCategoryList');
+        Route::post('', 'Admin\CategoryController@create')->name('adminCategoryCreate');
+        Route::get('add', 'Admin\CategoryController@add')->name('adminCategoryAdd');
+        Route::get('edit/{id}', 'Admin\CategoryController@edit')->name('adminCategoryEdit');
+        Route::put('update/{id}', 'Admin\CategoryController@update')->name('adminCategoryUpdate');
+        Route::get('delete/{id}', 'Admin\CategoryController@delete')->name('adminCategoryDelete');
     });
     
     //Cupom
     Route::group(['prefix' => 'cupom'], function() {
-        Route::get('list', 'Admin\CupomController@index')->name('cupomList');
-        Route::post('', 'Admin\CupomController@create')->name('cupomCreate');
-        Route::get('add', 'Admin\CupomController@add')->name('cupomAdd');
-        Route::get('edit/{id}', 'Admin\CupomController@edit')->name('cupomEdit');
-        Route::put('update/{id}', 'Admin\CupomController@update')->name('cupomUpdate');
-        Route::get('delete/{id}', 'Admin\CupomController@delete')->name('cupomDelete');
+        Route::get('list', 'Admin\CupomController@index')->name('adminCupomList');
+        Route::post('', 'Admin\CupomController@create')->name('adminCupomCreate');
+        Route::get('add', 'Admin\CupomController@add')->name('adminCupomAdd');
+        Route::get('edit/{id}', 'Admin\CupomController@edit')->name('adminCupomEdit');
+        Route::put('update/{id}', 'Admin\CupomController@update')->name('adminCupomUpdate');
+        Route::get('delete/{id}', 'Admin\CupomController@delete')->name('adminCupomDelete');
     });
 
     //Orders
     Route::group(['prefix' => 'order'], function() {
-        Route::get('list', 'Admin\OrderController@index')->name('orderList');
-        Route::post('/', 'Admin\OrderController@create')->name('orderCreate');
-        Route::get('add', 'Admin\OrderController@add')->name('orderAdd');
-        Route::get('edit/{id}', 'Admin\OrderController@edit')->name('orderEdit');
-        Route::put('update/{id}', 'Admin\OrderController@update')->name('orderUpdate');
-        Route::get('delete/{id}', 'Admin\OrderController@delete')->name('orderDelete');
+        Route::get('list', 'Admin\OrderController@index')->name('adminOrderList');
+        Route::post('/', 'Admin\OrderController@create')->name('adminOrderCreate');
+        Route::get('add', 'Admin\OrderController@add')->name('adminOrderAdd');
+        Route::get('edit/{id}', 'Admin\OrderController@edit')->name('adminOrderEdit');
+        Route::put('update/{id}', 'Admin\OrderController@update')->name('adminOrderUpdate');
+        Route::get('delete/{id}', 'Admin\OrderController@delete')->name('adminOrderDelete');
     });
 });
 

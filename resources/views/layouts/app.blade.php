@@ -50,11 +50,11 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <div class="nav navbar-nav">
-                    <a href="{{route('userList')}}" class="btn btn-default navbar-btn">Users</a>
-                    <a href="{{route('clientList')}}" class="btn btn-default navbar-btn">Clients</a>
-                    <a href="{{route('orderList')}}" class="btn btn-default navbar-btn">Orders</a>
-                    <a href="{{route('categoryList')}}" class="btn btn-default navbar-btn">Categories</a>
-                    <a href="{{route('cupomList')}}" class="btn btn-default navbar-btn">Cupoms</a>
+                    <a href="{{route('adminUserList')}}" class="btn btn-default navbar-btn">Users</a>
+                    <a href="{{route('adminClientList')}}" class="btn btn-default navbar-btn">Clients</a>
+                    <a href="{{route('adminOrderList')}}" class="btn btn-default navbar-btn">Orders</a>
+                    <a href="{{route('adminCategoryList')}}" class="btn btn-default navbar-btn">Categories</a>
+                    <a href="{{route('adminCupomList')}}" class="btn btn-default navbar-btn">Cupoms</a>
                 </div>
 
                 <!-- Right Side Of Navbar -->

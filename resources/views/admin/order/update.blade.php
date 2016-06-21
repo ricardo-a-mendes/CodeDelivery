@@ -4,14 +4,14 @@
         <div class="row">
             <div class="row page-header">
                 <h1>Order Form <small>Update Record</small></h1>
-                <a class="btn btn-success" href="{{ route('orderAdd') }}">New Order</a>
+                <a class="btn btn-success" href="{{ route('adminOrderAdd') }}">New Order</a>
             </div>
             @include('form_error')
 
         </div>
 
         <div class="row">
-            {!! Form::open(['route' => ['orderUpdate', $order->id], 'method' => 'PUT']) !!}
+            {!! Form::open(['route' => ['adminOrderUpdate', $order->id], 'method' => 'PUT']) !!}
             <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">Client</div>
@@ -40,7 +40,7 @@
             </div>
             {!! Form::close() !!}
             <div class="col-md-8">
-                <h2>Order Items <a href="{{route('orderAdd')}}" class="btn btn-success btn-sm" role="button">Add New Item</a></h2>
+                <h2>Order Items <a href="{{route('adminOrderAdd')}}" class="btn btn-success btn-sm" role="button">Add New Item</a></h2>
 
                 <table class="table table-striped">
                     <thead>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <a class="btn btn-danger" href="{{route('userDelete', ['id' => ''])}}">Remove</a>
+                    <a class="btn btn-danger" href="{{route('adminUserDelete', ['id' => ''])}}">Remove</a>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

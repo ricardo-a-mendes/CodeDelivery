@@ -4,7 +4,7 @@
         <div class="row">
             <div class="row page-header">
                 <h1>Clients <small>Management Area</small></h1>
-                <a href="{{route('clientAdd')}}" class="btn btn-success">New Client</a>
+                <a href="{{route('adminClientAdd')}}" class="btn btn-success">New Client</a>
             </div>
             <table class="table table-striped">
                 <thead>
@@ -15,12 +15,12 @@
                 </thead>
                 @foreach($clientCollection as $client)
                     <tr>
-                        <td><a href="{{route('clientEdit', ['id' => $client->id])}}">{{$client->id}}</a></td>
+                        <td><a href="{{route('adminClientEdit', ['id' => $client->id])}}">{{$client->id}}</a></td>
                         <td>{{$client->user->name}}</td>
                         <td>{{$client->address}}</td>
                         <td>
-                            <a href="{{route('clientEdit', ['id' => $client->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;
-                            <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('clientDelete', ['id' => $client->id])}}|{{ $client->user->name }}"></span></a>&nbsp;
+                            <a href="{{route('adminClientEdit', ['id' => $client->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;
+                            <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('adminClientDelete', ['id' => $client->id])}}|{{ $client->user->name }}"></span></a>&nbsp;
                         </td>
                     </tr>
                 @endforeach

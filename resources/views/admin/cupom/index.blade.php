@@ -5,7 +5,7 @@
         <div class="row">
             <div class="row page-header">
                 <h1>Cupoms <small>Management Area</small></h1>
-                <a href="{{route('cupomAdd')}}" class="btn btn-success">New Cupom</a>
+                <a href="{{route('adminCupomAdd')}}" class="btn btn-success">New Cupom</a>
             </div>
             <table class="table table-striped">
                 <thead>
@@ -23,8 +23,8 @@
                     <td>{{$cupom->code}}</td>
                     <td>{{FormatHelper::moneyBR($cupom->value)}}</td>
                     <td>
-                        <a href="{{route('cupomEdit', ['id' => $cupom->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;
-                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('cupomDelete', ['id' => $cupom->id])}}|{{ $cupom->code }}"></span></a>&nbsp;
+                        <a href="{{route('adminCupomEdit', ['id' => $cupom->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;
+                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('adminCupomDelete', ['id' => $cupom->id])}}|{{ $cupom->code }}"></span></a>&nbsp;
                     </td>
                 </tr>
                 @endforeach
