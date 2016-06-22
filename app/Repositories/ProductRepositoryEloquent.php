@@ -45,5 +45,16 @@ class ProductRepositoryEloquent extends BaseRepository implements ProductReposit
         return $this->model->findOrFail($id);
     }
 
+    /**
+     * Search a product
+     *
+     * @param $product
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function search($product = '')
+    {
+        return $this->model->where('name', 'like', "%{$product}%")->get();
+    }
+
 
 }

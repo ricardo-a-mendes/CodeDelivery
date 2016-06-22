@@ -10,6 +10,8 @@ class Order extends Model implements Transformable
 {
     use TransformableTrait;
 
+    public $id = 0;
+
     protected $fillable = [
         'client_id',
         'user_deleveryman_id',

@@ -19,4 +19,12 @@ interface ProductRepository extends RepositoryInterface
      * @throws ModelNotFoundException
      */
     public function findOrFail($id);
+
+    /**
+     * Search a product
+     * 
+     * @param $product
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function search($product);
 }

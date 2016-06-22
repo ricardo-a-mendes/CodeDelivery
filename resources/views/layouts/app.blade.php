@@ -55,6 +55,7 @@
                     <a href="{{route('adminOrderList')}}" class="btn btn-default navbar-btn">Orders</a>
                     <a href="{{route('adminCategoryList')}}" class="btn btn-default navbar-btn">Categories</a>
                     <a href="{{route('adminCupomList')}}" class="btn btn-default navbar-btn">Cupoms</a>
+                    <a href="{{route('customerOrderList')}}" class="btn btn-default navbar-btn">My Orders</a>
                 </div>
 
                 <!-- Right Side Of Navbar -->

@@ -21,10 +21,10 @@ Route::get('/', function () {
 });
 
 Route::pattern('id', '\d+');
-Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function(){
+Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function () {
 
     //Clients
-    Route::group(['prefix' => 'client'], function() {
+    Route::group(['prefix' => 'client'], function () {
         Route::get('list', 'Admin\ClientController@index')->name('adminClientList');
         Route::post('/', 'Admin\ClientController@create')->name('adminClientCreate');
         Route::get('add', 'Admin\ClientController@add')->name('adminClientAdd');
@@ -34,7 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function()
     });
 
     //Users
-    Route::group(['prefix' => 'user'], function() {
+    Route::group(['prefix' => 'user'], function () {
         Route::get('list', 'Admin\UserController@index')->name('adminUserList');
         Route::post('/', 'Admin\UserController@create')->name('adminUserCreate');
         Route::get('add', 'Admin\UserController@add')->name('adminUserAdd');
@@ -44,7 +44,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function()
     });
 
     //Category
-    Route::group(['prefix' => 'category'], function() {
+    Route::group(['prefix' => 'category'], function () {
         Route::get('list', 'Admin\CategoryController@index')->name('adminCategoryList');
         Route::post('', 'Admin\CategoryController@create')->name('adminCategoryCreate');
         Route::get('add', 'Admin\CategoryController@add')->name('adminCategoryAdd');
@@ -52,9 +52,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function()
         Route::put('update/{id}', 'Admin\CategoryController@update')->name('adminCategoryUpdate');
         Route::get('delete/{id}', 'Admin\CategoryController@delete')->name('adminCategoryDelete');
     });
-    
+
     //Cupom
-    Route::group(['prefix' => 'cupom'], function() {
+    Route::group(['prefix' => 'cupom'], function () {
         Route::get('list', 'Admin\CupomController@index')->name('adminCupomList');
         Route::post('', 'Admin\CupomController@create')->name('adminCupomCreate');
         Route::get('add', 'Admin\CupomController@add')->name('adminCupomAdd');
@@ -64,7 +64,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function()
     });
 
     //Orders
-    Route::group(['prefix' => 'order'], function() {
+    Route::group(['prefix' => 'order'], function () {
         Route::get('list', 'Admin\OrderController@index')->name('adminOrderList');
         Route::post('/', 'Admin\OrderController@create')->name('adminOrderCreate');
         Route::get('add', 'Admin\OrderController@add')->name('adminOrderAdd');
@@ -74,8 +74,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function()
     });
 });
 
-Route::group(['prefix' => 'customer'], function (){
-    Route::get('order/create', 'CheckoutController@create')->name('customerOrderNew');
+Route::group(['prefix' => 'customer'], function () {
+    Route::group(['prefix' => 'order'], function () {
+        Route::get('list', 'OrderController@index')->name('customerOrderList');
+        Route::get('create', 'OrderController@create')->name('customerOrderNew');
+        Route::get('edit', 'OrderController@create')->name('customerOrderEdit');
+        Route::post('product/search', 'OrderController@search')->name('customerOrderItemSearch');
+        Route::post('product/search', 'OrderController@addItems')->name('customerOrderAddItems');
+    });
 });
 
 Route::auth();
