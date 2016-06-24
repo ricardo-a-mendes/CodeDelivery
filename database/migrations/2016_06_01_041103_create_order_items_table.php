@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateOrderItemsTable extends Migration
 {
@@ -22,7 +22,6 @@ class CreateOrderItemsTable extends Migration
             $table->foreign('product_id')->references('id')->on('products');
 
             $table->smallInteger('quantity');
-            $table->decimal('price');
             $table->timestamps();
         });
     }

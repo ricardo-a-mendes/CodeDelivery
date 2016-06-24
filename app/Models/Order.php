@@ -10,23 +10,21 @@ class Order extends Model implements Transformable
 {
     use TransformableTrait;
 
-    public $id = 0;
-
     protected $fillable = [
         'client_id',
-        'user_deleveryman_id',
+        'user_deliveryman_id',
         'total',
         'status',
     ];
 
     public function items()
     {
-        return $this->hasMany(OrderItems::class);
+        return $this->hasMany(OrderItem::class);
     }
 
     public function deliveryman()
     {
-        return $this->belongsTo(User::class, 'user_deleveryman_id');
+        return $this->belongsTo(User::class, 'user_deliveryman_id');
     }
 
     public function client()

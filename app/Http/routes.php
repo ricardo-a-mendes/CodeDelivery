@@ -77,10 +77,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function (
 Route::group(['prefix' => 'customer'], function () {
     Route::group(['prefix' => 'order'], function () {
         Route::get('list', 'OrderController@index')->name('customerOrderList');
-        Route::get('create', 'OrderController@create')->name('customerOrderNew');
+        Route::get('create/{id?}', 'OrderController@create')->name('customerOrderNew');
         Route::get('edit', 'OrderController@create')->name('customerOrderEdit');
         Route::post('product/search', 'OrderController@search')->name('customerOrderItemSearch');
-        Route::post('product/search', 'OrderController@addItems')->name('customerOrderAddItems');
+        Route::post('addItem', 'OrderController@addItems')->name('customerOrderAddItems');
     });
 });
 

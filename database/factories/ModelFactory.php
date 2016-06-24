@@ -16,7 +16,7 @@ use CodeDelivery\Models\Category;
 use CodeDelivery\Models\Client;
 use CodeDelivery\Models\Cupom;
 use CodeDelivery\Models\Order;
-use CodeDelivery\Models\OrderItems;
+use CodeDelivery\Models\OrderItem;
 use CodeDelivery\Models\Product;
 use CodeDelivery\Models\User;
 use Faker\Generator;
@@ -72,19 +72,10 @@ $factory->define(Order::class, function (Generator $faker) {
     ];
 });
 
-$factory->define(OrderItems::class, function (Generator $faker) {
+$factory->define(OrderItem::class, function (Generator $faker) {
     return [
         'product_id' => $faker->numberBetween(1,150),
-        'quantity' => $faker->numberBetween(1, 7),
-        'price' => $faker->randomFloat(2, 30, 1000),
-    ];
-});
-
-$factory->define(OrderItems::class, function (Generator $faker) {
-    return [
-        'product_id' => $faker->numberBetween(1,150),
-        'quantity' => $faker->numberBetween(1, 7),
-        'price' => $faker->randomFloat(2, 30, 1000),
+        'quantity' => $faker->numberBetween(1, 7)
     ];
 });
 

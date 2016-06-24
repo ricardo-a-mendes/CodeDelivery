@@ -2,14 +2,17 @@
 
 namespace CodeDelivery\Http\Controllers;
 
+
+use CodeDelivery\Events\OrderItemWasSavedEvent;
+use CodeDelivery\Http\Requests;
 use CodeDelivery\Models\Order;
-use CodeDelivery\Models\OrderItems;
+use CodeDelivery\Models\OrderItem;
 use CodeDelivery\Models\Product;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\ProductRepository;
+use Event;
 use Illuminate\Http\Request;
-
-use CodeDelivery\Http\Requests;
+use Session;
 
 class OrderController extends Controller
 {
@@ -19,48 +22,62 @@ class OrderController extends Controller
         return view('customer.order.index', compact('orderCollection'));
     }
 
-    public function create()
+    public function create(OrderRepository $orderRepository)
     {
-        $order = new Order();
-        $orderItems = [];
+        $id = Session::get('order_id', 0);
+        if ($id > 0) {
+            $order = $orderRepository->findOrFail($id);
+            $orderItems = $order->items;
+        } else {
+            $order = new Order();
+            $order->id = 0;
+            $orderItems = [];
+        }
+
         $foundItems = [];
         return view('customer.order.create', compact('order', 'orderItems', 'foundItems'));
     }
-    
+
     public function search(Request $request, ProductRepository $product, OrderRepository $orderRepository)
     {
-        $order = new Order();
-        if ($request->input('order_id') !== '0')
-        {
+        if ($request->input('order_id') === '0') {
+            $order = new Order();
+            $order->id = 0;
+        } else {
             $order = $orderRepository->findOrFail($request->input('order_id'));
         }
         $orderItems = $order->items;
         $foundItems = $product->search($request->input('product'));
-        
+
         return view('customer.order.create', compact('order', 'orderItems', 'foundItems'));
     }
 
     public function addItems(Request $request, OrderRepository $orderRepository, Product $productModel)
     {
-        $order = new Order();
-        if ($request->input('order_id') !== '0')
-        {
-            $order = $orderRepository->findOrFail($request->input('order_id'));
-        }
+        $orderItems = [];
+        if ($request->has('item')) {
+            if ($request->input('order_id') === '0') {
+                $order = new Order();
+                $order->client()->associate(\Auth::user());
+                $order->save();
+            } else {
+                $order = $orderRepository->findOrFail($request->input('order_id'));
+            }
 
-        if ($request->has('item'))
-        {
             $products = $productModel->whereIn('id', $request->input('item'))->get();
 
-            foreach ($products as $product)
-            {
-                $orderItem = new OrderItems();
-                
+            foreach ($products as $product) {
+                $orderItem = new OrderItem();
+                $orderItem->quantity = 1;
+                $orderItem->product()->associate($product);
+                $order->items()->save($orderItem);
             }
+
+            Event::fire(new OrderItemWasSavedEvent($order));
+            $orderItems = $order->items;
         }
 
-        $orderItems = $order->items;
-        $foundItems = [];
-        return view('customer.order.create', compact('order', 'orderItems', 'foundItems'));
+        Session::flash('order_id', $order->id);
+        return redirect()->route('customerOrderNew');
     }
 }

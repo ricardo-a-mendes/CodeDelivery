@@ -24,6 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $q = \DB::table('order_items')
+            ->selectRaw('sum(order_items.quantity*products.price) as total')
+            ->join('products', 'products.id', '=', 'order_items.product_id')
+            ->where('order_id', '=', 1)
+            ->first();
+        dd($q->total);
         return view('home');
     }
 }

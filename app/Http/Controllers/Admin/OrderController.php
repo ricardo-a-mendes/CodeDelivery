@@ -59,9 +59,9 @@ class OrderController extends Controller
             $itemsToSave = $request->all();
 
             //If not selected
-            if ($request->input('user_deleveryman_id') === '0')
+            if ($request->input('user_deliveryman_id') === '0')
             {
-               $itemsToSave = $request->except('user_deleveryman_id');
+               $itemsToSave = $request->except('user_deliveryman_id');
             }
             
             $this->order->findOrFail($id)->fill($itemsToSave)->save();

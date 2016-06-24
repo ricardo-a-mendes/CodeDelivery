@@ -84,9 +84,10 @@
                             <tbody>
                             @foreach($orderItems as $item)
                                 <tr>
-                                    <td>{{$item->name}}</td>
+                                    <td>{{$item->product->name}}</td>
                                     <td>{{$item->quantity}}</td>
-                                    <td>{{$item->quantity*$item->price}}</td>
+                                    <td>{{FormatHelper::moneyBR($item->product->price)}}</td>
+                                    <td>{{FormatHelper::moneyBR($item->quantity*$item->product->price)}}</td>
                                     <td>Remove</td>
                                 </tr>
                             @endforeach
