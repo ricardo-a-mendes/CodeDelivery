@@ -29,6 +29,7 @@
                     {!! Form::close() !!}
 
                 </div>
+                @if(count($foundItems)>0)
                 <div class="row">
                     {!! Form::open(['route' => ['customerOrderAddItems'], 'method' => 'POST']) !!}
                     {!! Form::hidden('order_id', $order->id) !!}
@@ -37,8 +38,8 @@
                         <tr>
                             <th>#</th>
                             <th>Item</th>
-                            <th>Price</th>
-                            <th>Action</th>
+                            <th>Category</th>
+                            <th>Unity Price</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -46,8 +47,8 @@
                             <tr>
                                 <td>{!! Form::checkbox('item[]', $searchedItem->id) !!}</td>
                                 <td>{{$searchedItem->name}}</td>
-                                <td>{{$searchedItem->price}}</td>
-                                <td>Remove</td>
+                                <td>{{$searchedItem->category->name}}</td>
+                                <td>{{FormatHelper::moneyBR($searchedItem->price)}}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -57,7 +58,7 @@
                     </div>
                     {!! Form::close() !!}
                 </div>
-
+                @endif
             </div>
 
             <div class="col-md-7">

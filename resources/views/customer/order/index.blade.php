@@ -10,9 +10,10 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Code</th>
-                    <th>Value</th>
+                    <th>Order Number</th>
+                    <th>Created At</th>
+                    <th>Status</th>
+                    <th>Total</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -20,10 +21,13 @@
                 @foreach($orderCollection as $order)
                     <tr>
                         <td>{{$order->id}}</td>
-                        <td>{{$order->code}}</td>
-                        <td>{{FormatHelper::moneyBR($order->value)}}</td>
+                        <td>{{$order->created_at}}</td>
+                        <td>{{$statusOptions[$order->status]}}</td>
+                        <td>{{FormatHelper::moneyBR($order->total)}}</td>
                         <td>
+                            @if($order->status == 1)
                             <a href="{{route('customerOrderEdit', ['id' => $order->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;
+                            @endif
                         </td>
                     </tr>
                 @endforeach

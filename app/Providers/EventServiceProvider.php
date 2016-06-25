@@ -2,7 +2,7 @@
 
 namespace CodeDelivery\Providers;
 
-use CodeDelivery\Events\OrderItemWasSavedEvent;
+use CodeDelivery\Events\OrderItemsWereSavedEvent;
 use CodeDelivery\Listeners\UpdateOrderTotal;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -15,7 +15,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        OrderItemWasSavedEvent::class => [
+        OrderItemsWereSavedEvent::class => [
             UpdateOrderTotal::class,
         ],
     ];

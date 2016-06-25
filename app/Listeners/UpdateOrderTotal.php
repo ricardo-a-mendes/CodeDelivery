@@ -2,8 +2,8 @@
 
 namespace CodeDelivery\Listeners;
 
-use CodeDelivery\Events\OrderItemWasSavedEvent;
-use DB;
+use CodeDelivery\Events\OrderItemsWereSavedEvent;
+
 
 class UpdateOrderTotal
 {
@@ -23,15 +23,16 @@ class UpdateOrderTotal
      * @param  OrderItemSaved  $event
      * @return void
      */
-    public function handle(OrderItemWasSavedEvent $event)
+    public function handle(OrderItemsWereSavedEvent $event)
     {
-        $total = DB::table('order_items')
+        $total = $event->order
             ->selectRaw('sum(order_items.quantity*products.price) as total')
+            ->join('order_items', 'order_items.order_id', '=', 'orders.id')
             ->join('products', 'products.id', '=', 'order_items.product_id')
             ->where('order_id', '=', $event->order->id)
             ->first()
             ->total;
-        $event->order->update(['total' => $total]);
 
+        $event->order->update(['total' => $total]);
     }
 }

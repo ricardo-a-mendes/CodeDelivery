@@ -1,8 +1,8 @@
 <?php
 
+use CodeDelivery\Events\OrderItemsWereSavedEvent;
 use CodeDelivery\Models\Order;
 use CodeDelivery\Models\OrderItem;
-use CodeDelivery\Models\OrderItems;
 use Illuminate\Database\Seeder;
 
 class OrdersTableSeeder extends Seeder
@@ -23,12 +23,7 @@ class OrdersTableSeeder extends Seeder
             }
             
             //Updating Total
-            $q = DB::table('order_items')
-                ->selectRaw('sum(order_items.quantity*products.price) as total')
-                ->join('products', 'products.id', '=', 'order_items.product_id')
-                ->where('order_id', '=', $createdOrder->id)
-                ->first();
-            $createdOrder->update(['total' => $q->total]);
+            Event::fire(new OrderItemsWereSavedEvent($createdOrder));
         });
     }
 }

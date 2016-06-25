@@ -7,7 +7,7 @@ use CodeDelivery\Models\Order;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class OrderItemWasSavedEvent extends Event
+class OrderItemsWereSavedEvent extends Event
 {
     use SerializesModels;
 

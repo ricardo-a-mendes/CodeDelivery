@@ -3,7 +3,7 @@
 namespace CodeDelivery\Http\Controllers;
 
 
-use CodeDelivery\Events\OrderItemWasSavedEvent;
+use CodeDelivery\Events\OrderItemsWereSavedEvent;
 use CodeDelivery\Http\Requests;
 use CodeDelivery\Models\Order;
 use CodeDelivery\Models\OrderItem;
@@ -16,10 +16,11 @@ use Session;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(OrderRepository $orderRepository)
     {
-        $orderCollection = [];
-        return view('customer.order.index', compact('orderCollection'));
+        $orderCollection = $orderRepository->findWhere(['client_id' => \Auth::user()->id]);
+        $statusOptions = $orderRepository->getOrderStatusOptions();
+        return view('customer.order.index', compact('orderCollection', 'statusOptions'));
     }
 
     public function create(OrderRepository $orderRepository)
@@ -28,6 +29,7 @@ class OrderController extends Controller
         if ($id > 0) {
             $order = $orderRepository->findOrFail($id);
             $orderItems = $order->items;
+            Session::reflash();
         } else {
             $order = new Order();
             $order->id = 0;
@@ -73,7 +75,7 @@ class OrderController extends Controller
                 $order->items()->save($orderItem);
             }
 
-            Event::fire(new OrderItemWasSavedEvent($order));
+            Event::fire(new OrderItemsWereSavedEvent($order));
             $orderItems = $order->items;
         }
 
