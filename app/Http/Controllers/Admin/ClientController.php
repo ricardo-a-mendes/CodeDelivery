@@ -75,7 +75,7 @@ class ClientController extends Controller
             $client->save();
             $user->save();
 
-            Session::flash('success', trans('crud.success.saved'));            
+            Session::flash('success', trans('crud.success.saved'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'updated']));
         }

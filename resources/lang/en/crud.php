@@ -14,10 +14,13 @@ return [
     */
 
     'success' => [
-        'saved' => 'The record was successfully saved.',
+        'saved' => 'The record was successfully saved.|The records were successfully saved.',
         'deleted' => 'The record was successfully deleted.'
     ],
     'record_not_found' => 'The selected record was not found to be :action.',
-    'client_has_orders' => 'Sorry, this client has :qtdOrders oreder. It can\'t be deleted!|Sorry, this client has :qtdOrders orders. It can\'t be deleted!'
+    'client_has_orders' => 'Sorry, this client has :qtdOrders oreder. It can\'t be deleted!|Sorry, this client has :qtdOrders orders. It can\'t be deleted!',
+    'info' => [
+        'nothing_to_be_saved' => 'Don\'t worry, nothing needed to be updated!',
+    ],
 
 ];

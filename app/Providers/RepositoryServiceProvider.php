@@ -6,8 +6,8 @@ use CodeDelivery\Repositories\CategoryRepository;
 use CodeDelivery\Repositories\CategoryRepositoryEloquent;
 use CodeDelivery\Repositories\ClientRepository;
 use CodeDelivery\Repositories\ClientRepositoryEloquent;
-use CodeDelivery\Repositories\OrderItemsRepository;
-use CodeDelivery\Repositories\OrderItemsRepositoryEloquent;
+use CodeDelivery\Repositories\OrderItemRepository;
+use CodeDelivery\Repositories\OrderItemRepositoryEloquent;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\OrderRepositoryEloquent;
 use CodeDelivery\Repositories\ProductRepository;
@@ -51,8 +51,8 @@ class RepositoryServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            OrderItemsRepository::class,
-            OrderItemsRepositoryEloquent::class
+            OrderItemRepository::class,
+            OrderItemRepositoryEloquent::class
         );
 
         $this->app->bind(

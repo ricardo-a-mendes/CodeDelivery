@@ -8,9 +8,11 @@ use CodeDelivery\Http\Requests;
 use CodeDelivery\Models\Order;
 use CodeDelivery\Models\OrderItem;
 use CodeDelivery\Models\Product;
+use CodeDelivery\Repositories\OrderItemRepository;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\ProductRepository;
 use Event;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Session;
 
@@ -39,6 +41,39 @@ class OrderController extends Controller
         $foundItems = [];
         return view('customer.order.create', compact('order', 'orderItems', 'foundItems'));
     }
+    
+    public function edit($id)
+    {
+        Session::flash('order_id', $id);
+        return redirect()->route('customerOrderNew');
+    }
+    
+    public function itemChange(Request $request, OrderItemRepository $orderItemRepository)
+    {
+        $orderID = $request->input('order_id');
+
+        $changedItems = array_diff_assoc($request->input('quantity'), $request->input('quantity_hidden'));
+        if (count($changedItems) > 0)
+        {
+            try {
+                $order = $orderItemRepository->getOrder($orderID);
+                foreach ($changedItems as $itemID => $newQuantity) {
+                    $orderItemRepository->update(['quantity' => $newQuantity], $itemID);
+                }
+                Event::fire(new OrderItemsWereSavedEvent($order));
+                Session::flash('success', trans_choice('crud.success.saved', count($changedItems)));
+            } catch (ModelNotFoundException $e) {
+                Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));
+            }
+        }
+        else
+        {
+            Session::flash('info', trans('crud.info.nothing_to_be_saved'));
+        }
+        
+        Session::flash('order_id', $orderID);
+        return redirect()->route('customerOrderNew');
+    }
 
     public function search(Request $request, ProductRepository $product, OrderRepository $orderRepository)
     {
@@ -56,7 +91,6 @@ class OrderController extends Controller
 
     public function addItems(Request $request, OrderRepository $orderRepository, Product $productModel)
     {
-        $orderItems = [];
         if ($request->has('item')) {
             if ($request->input('order_id') === '0') {
                 $order = new Order();
@@ -74,12 +108,28 @@ class OrderController extends Controller
                 $orderItem->product()->associate($product);
                 $order->items()->save($orderItem);
             }
-
             Event::fire(new OrderItemsWereSavedEvent($order));
-            $orderItems = $order->items;
         }
 
         Session::flash('order_id', $order->id);
+        return redirect()->route('customerOrderNew');
+    }
+
+    public function removeItem(OrderItemRepository $orderItemRepository, $id)
+    {
+        try {
+            $orderItem = $orderItemRepository->find($id);
+            $order = $orderItem->order;
+
+            $orderItemRepository->delete($id);
+
+            Event::fire(new OrderItemsWereSavedEvent($order));
+            Session::flash('success', trans('crud.success.deleted'));
+            Session::flash('order_id', $order->id);
+        } catch (ModelNotFoundException $e) {
+            Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));
+        }
+        
         return redirect()->route('customerOrderNew');
     }
 }

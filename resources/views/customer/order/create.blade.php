@@ -4,6 +4,11 @@
     <div class="container">
 
         <div class="row">
+            @if (Session::has('error'))
+                <div class="alert alert-danger" role="alert">
+                    <strong>Oh snap :(</strong> {{ Session::get('error') }}
+                </div>
+            @endif
             <div class="col-md-5">
                 <div class="row">
                     <div class="col-md-12">
@@ -71,6 +76,8 @@
                     </div>
                 </div>
                 <div class="row">
+                    {!! Form::open(['route' => 'customerOrderItemChange', 'method' => 'POST']) !!}
+                    {!! Form::hidden('order_id', $order->id) !!}
                     <div class="col-md-12">
                         <table class="table table-striped">
                             <thead>
@@ -82,24 +89,67 @@
                                 <th>Action</th>
                             </tr>
                             </thead>
+                            <tfoot>
+                            <tr>
+                                <td colspan="3" align="right"><strong>Total</strong></td>
+                                <td>{{FormatHelper::moneyBR($order->total)}}</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            </tfoot>
                             <tbody>
                             @foreach($orderItems as $item)
                                 <tr>
                                     <td>{{$item->product->name}}</td>
-                                    <td>{{$item->quantity}}</td>
+                                    <td>
+                                        <div class="form-group col-md-5">
+                                        {!! Form::hidden('quantity_hidden['.$item->id.']', $item->quantity) !!}
+                                        {!! Form::number('quantity['.$item->id.']', $item->quantity, ['step' => '1', 'min' => 1, 'class' => 'form-control input-sm', 'placeholder' => 'Value']) !!}
+                                        </div>
+                                    </td>
                                     <td>{{FormatHelper::moneyBR($item->product->price)}}</td>
                                     <td>{{FormatHelper::moneyBR($item->quantity*$item->product->price)}}</td>
-                                    <td>Remove</td>
+                                    <td><a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('customerOrderItemRemove', ['id' => $item->id])}}|{{ $item->product->name }}"></span></a>&nbsp;</td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+                        @if(count($orderItems) > 0)
+                            {!! Form::submit('Update Order', ['class' => 'btn btn-primary']) !!}
+                        @endif
                     </div>
+                {!! Form::close() !!}
                 </div>
-
             </div>
-
         </div>
-
     </div>
+    <!-- Deleting Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Removing Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Item to be removed: <strong><span id="itemNameDestination"></span></strong></p>
+                    <p>Are you sure ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a class="btn btn-danger" href="#">Delete</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <script type="text/javascript">
+        $(function() {
+            $('#deleteConfirmationModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var params = button.data('whatever').split("|"); // Extract info from data-* attributes
+                var modal = $(this);
+                modal.find('.modal-footer a').attr('href', params[0]);
+                modal.find('.modal-body span#itemNameDestination').text(params[1]);
+            })
+        });
+    </script>
 @endsection

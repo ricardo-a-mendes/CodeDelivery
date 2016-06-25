@@ -97,6 +97,12 @@
                     <strong>Oh snap :(</strong> {{ Session::get('error') }}
                 </div>
             @endif
+
+            @if (Session::has('info'))
+                <div class="alert alert-info" role="alert">
+                    <strong>Heads up! </strong> {{ Session::get('info') }}
+                </div>
+            @endif
         </div>
     </div>
 
