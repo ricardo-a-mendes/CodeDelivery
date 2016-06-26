@@ -154,6 +154,10 @@ return [
         //https://github.com/andersao/l5-repository
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
 
+        //https://github.com/lucadegasperi/oauth2-server-laravel
+        LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
+        LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -215,6 +219,8 @@ return [
         
         'FormHelper' => CodeDelivery\Helpers\FormHelper::class,
         'FormatHelper' => CodeDelivery\Helpers\FormatHelper::class,
+
+        'Authorizer' => LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
 
     ],
 

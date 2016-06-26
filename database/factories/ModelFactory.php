@@ -15,6 +15,7 @@
 use CodeDelivery\Models\Category;
 use CodeDelivery\Models\Client;
 use CodeDelivery\Models\Cupom;
+use CodeDelivery\Models\OAuthClient;
 use CodeDelivery\Models\Order;
 use CodeDelivery\Models\OrderItem;
 use CodeDelivery\Models\Product;
@@ -84,4 +85,8 @@ $factory->define(Cupom::class, function (Generator $faker) {
         'code' => rand(100,10000),
         'value' => rand(50,100)
     ];
+});
+
+$factory->define(OAuthClient::class, function (Generator $faker) {
+   return [];
 });

@@ -14,13 +14,14 @@
 use CodeDelivery\Models\Category;
 use CodeDelivery\Models\User;
 
+Route::get('/home', 'HomeController@index');
 Route::get('/', function () {
-
     return redirect('/home');
-
 });
-
+Route::auth();
 Route::pattern('id', '\d+');
+
+//Admin Group
 Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function () {
 
     //Clients
@@ -74,6 +75,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function (
     });
 });
 
+//Customer Group
 Route::group(['prefix' => 'customer', 'middleware' => 'auth.checkrole'], function () {
     Route::group(['prefix' => 'order'], function () {
         Route::get('list', 'OrderController@index')->name('customerOrderList');
@@ -86,6 +88,19 @@ Route::group(['prefix' => 'customer', 'middleware' => 'auth.checkrole'], functio
     });
 });
 
-Route::auth();
+//API Group
+Route::group(['prefix' => 'api', 'middleware' => 'oauth'], function () {
+    Route::get('pedidos', function(){
+        return [
+            'id' => 1,
+            'client' => 'Ricardo',
+            'total' => 10
+        ];
+    });
+});
 
-Route::get('/home', 'HomeController@index');
+
+//Add this rote (oauth/access_token) to "CodeDelivery\Http\Middleware\VerifyCsrfToken" exception ($except)
+Route::post('oauth/access_token', function() {
+    return Response::json(Authorizer::issueAccessToken());
+});
