@@ -90,7 +90,48 @@ Route::group(['prefix' => 'customer', 'middleware' => 'auth.checkrole'], functio
 
 //API Group
 Route::group(['prefix' => 'api', 'middleware' => 'oauth'], function () {
-    Route::get('pedidos', function(){
+    /**
+    Using PostMan
+    1 - To Get the token
+        POST => http://localhost/oauth/access_token
+        Parameters:
+            grant_type:password
+            username:{User e-mail}
+            password:{User Password}
+            client_id:{Application ID}
+            client_secret:{Application Secret}
+
+        Example
+            grant_type:password
+            username:eng.rmendes@gmail.com
+            password:123456
+            client_id:AP_ID_01
+            client_secret:secret
+            password:123456
+
+    2 - To test
+        GET => http://localhost/api/teste
+        Parameters:
+            Authorization:{token_type} {Token}
+
+        Example:
+            Authorization:Bearer ZnTuvYONdEqMJxAsQSNQoT9vjamAZ0mb4ajMDSNp
+
+    3 - To refresh Token
+        POST => http://localhost/oauth/access_token
+        Parameters:
+            grant_type:refresh_token
+            client_id:{Application ID}
+            client_secret:{Application Secret}
+            refresh_token:{refresh_token}
+
+        Example:
+            grant_type:refresh_token
+            client_id:AP_ID_01
+            client_secret:secret
+            refresh_token:NLvs2LjAgPKX7vsHwEwhnL6eguLjDn1T3PSLHu4l
+    */
+    Route::get('teste', function(){
         return [
             'id' => 1,
             'client' => 'Ricardo',
