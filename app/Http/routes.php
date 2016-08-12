@@ -94,7 +94,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'oauth'], function () {
     Using PostMan
     1 - To Get the token
         POST => http://localhost/oauth/access_token
-        Parameters:
+        Parameters (sent this information into "Body"):
             grant_type:password
             username:{User e-mail}
             password:{User Password}
@@ -111,7 +111,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'oauth'], function () {
 
     2 - To test
         GET => http://localhost/api/teste
-        Parameters:
+        Parameters (sent this information into "Header" instead "Body"):
             Authorization:{token_type} {Token}
 
         Example:
@@ -119,7 +119,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'oauth'], function () {
 
     3 - To refresh Token
         POST => http://localhost/oauth/access_token
-        Parameters:
+        Parameters (sent this information into "Body"):
             grant_type:refresh_token
             client_id:{Application ID}
             client_secret:{Application Secret}
@@ -131,13 +131,24 @@ Route::group(['prefix' => 'api', 'middleware' => 'oauth'], function () {
             client_secret:secret
             refresh_token:NLvs2LjAgPKX7vsHwEwhnL6eguLjDn1T3PSLHu4l
     */
-    Route::get('teste', function(){
-        return [
-            'id' => 1,
-            'client' => 'Ricardo',
-            'total' => 10
-        ];
+    Route::group(['prefix' => 'client', 'middleware' => 'oauth.checkrole:client'], function () {
+        Route::resource('order',
+            'Api\Client\ClientCheckoutController',
+            ['except' => ['create', 'edit', 'destroy']]
+        );
     });
+
+    Route::group(['prefix' => 'deliveryman', 'middleware' => 'oauth.checkrole:deliveryman'], function () {
+        Route::get('pedidos', function(){
+            return [
+                'id' => 1,
+                'client' => 'RicardoDeliveryman',
+                'total' => 10
+            ];
+        });
+    });
+
+
 });
 
 

@@ -3,6 +3,7 @@
 namespace CodeDelivery\Http;
 
 use CodeDelivery\Http\Middleware\CheckRole;
+use CodeDelivery\Http\Middleware\OAuthCheckRole;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -52,6 +53,7 @@ class Kernel extends HttpKernel
         'guest' => \CodeDelivery\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'auth.checkrole' => CheckRole::class,
+        'oauth.checkrole' => OAuthCheckRole::class,
 
         'oauth' => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,
         'oauth-user' => \LucaDegasperi\OAuth2Server\Middleware\OAuthUserOwnerMiddleware::class,
