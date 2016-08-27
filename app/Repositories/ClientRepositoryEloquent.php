@@ -7,6 +7,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use CodeDelivery\Repositories\ClientRepository;
 use CodeDelivery\Models\Client;
 use CodeDelivery\Validators\ClientValidator;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class ClientRepositoryEloquent

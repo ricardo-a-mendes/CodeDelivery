@@ -12,11 +12,6 @@ class OAuthClientSeeder extends Seeder
      */
     public function run()
     {
-        factory(OAuthClient::class)->create([
-                'id' => 'appid01',
-                'secret' => 'secret',
-                'name' => 'Minha App Mobile'
-            ]
-        );
+        factory(OAuthClient::class)->create();
     }
 }

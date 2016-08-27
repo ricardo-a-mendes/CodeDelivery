@@ -27,8 +27,8 @@ $factory->define(User::class, function (Generator $faker) {
         'name' => $faker->name,
         'email' => $faker->safeEmail,
         'role' => $faker->randomElement(['client', 'deliveryman']),
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'password' => bcrypt('123456'),
+        'remember_token' => '1 a 6',
     ];
 });
 
@@ -88,5 +88,9 @@ $factory->define(Cupom::class, function (Generator $faker) {
 });
 
 $factory->define(OAuthClient::class, function (Generator $faker) {
-   return [];
+   return [
+       'id' => 'appid01',
+       'secret' => 'secret',
+       'name' => 'Meu APP 01'
+   ];
 });

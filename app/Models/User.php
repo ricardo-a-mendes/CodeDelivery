@@ -26,7 +26,7 @@ class User extends Authenticatable implements Transformable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password'
     ];
 
     public function client()

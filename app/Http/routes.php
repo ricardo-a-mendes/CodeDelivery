@@ -136,6 +136,11 @@ Route::group(['prefix' => 'api', 'middleware' => 'oauth'], function () {
             'Api\Client\ClientCheckoutController',
             ['except' => ['create', 'edit', 'destroy']]
         );
+
+        Route::resource('authenticated',
+            'Api\Client\ClientController',
+            ['except' => ['create', 'store', 'show', 'edit', 'update', 'destroy']]
+        );
     });
 
     Route::group(['prefix' => 'deliveryman', 'middleware' => 'oauth.checkrole:deliveryman'], function () {

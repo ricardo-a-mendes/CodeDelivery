@@ -21,12 +21,15 @@ class UsersTableSeeder extends Seeder
             'remember_token' => '1 a 6',
         ]);
 
-        factory(User::class)->create([
+        $firstUser = factory(User::class)->create([
             'name' => 'User',
             'email' => 'user@user.com',
             'password' => bcrypt('123456'),
             'remember_token' => '1 a 6',
         ]);
+
+        $clientModel = factory(Client::class)->make();
+        $firstUser->client()->save($clientModel);
 
         factory(User::class, 20)->create()->each(function (User $createdUser){
             if ($createdUser->role == 'client') {
