@@ -141,7 +141,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'oauth'], function () {
 
         Route::resource('authenticated',
             'Api\Client\ClientController',
-            ['except' => ['create', 'store', 'show', 'edit', 'update', 'destroy']]
+            ['only' => ['index']]
         );
     });
 
