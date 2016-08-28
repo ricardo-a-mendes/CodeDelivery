@@ -4,13 +4,13 @@
         <div class="row">
             <div class="row page-header">
                 <h1>User Form <small>Update Record</small></h1>
-                <a class="btn btn-success" href="{{ route('adminUserAdd') }}">New User</a>
+                <a class="btn btn-success" href="{{ route('admin.user.create') }}">New User</a>
                 <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteConfirmationModal">Delete this user</a>
             </div>
             @include('form_error')
         </div>
 
-        {!! Form::open(['route' => ['adminUserUpdate', $user->id], 'method' => 'PUT']) !!}
+        {!! Form::open(['route' => ['admin.user.update', $user->id], 'method' => 'PUT']) !!}
 
         @include('admin.user.fields')
 
@@ -39,7 +39,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <a class="btn btn-danger" href="{{route('adminUserDelete', ['id' => $user->id])}}">Delete</a>
+                    <a class="btn btn-danger" href="{{route('admin.user.delete', ['id' => $user->id])}}">Delete</a>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

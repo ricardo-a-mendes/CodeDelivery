@@ -6,6 +6,7 @@ use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Requests\Admin\UserCreateRequest;
 use CodeDelivery\Http\Requests\Admin\UserUpdateRequest;
+use CodeDelivery\Models\User;
 use CodeDelivery\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Session;
@@ -27,18 +28,18 @@ class UserController extends Controller
         return view('admin.user.index', compact('userCollection', 'roles'));
     }
 
-    public function add()
+    public function create()
     {
-        $user = $this->user;
+        $user = new User();
         $roles = $this->roles;
         return view('admin.user.create', compact('roles', 'user'));
     }
 
-    public function create(UserCreateRequest $request)
+    public function store(UserCreateRequest $request, User $user)
     {
-        $this->user->fill($request->all())->save();
+        $user->fill($request->all())->save();
         Session::flash('success', trans('crud.success.saved'));
-        return redirect()->route('adminUserList');
+        return redirect()->route('admin.user.index');
     }
 
     public function edit($id)
@@ -49,7 +50,7 @@ class UserController extends Controller
             return view('admin.user.update', compact('user','roles'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));
-            return redirect()->route('adminUserList');
+            return redirect()->route('admin.user.index');
         }
     }
 
@@ -62,7 +63,7 @@ class UserController extends Controller
             Session::flash('error', trans('crud.record_not_found', ['action' => 'updated']));
         }
 
-        return redirect()->route('adminUserList');
+        return redirect()->route('admin.user.index');
     }
 
     public function delete($id)
@@ -83,6 +84,6 @@ class UserController extends Controller
             Session::flash('error', trans('crud.record_not_found', ['action' => 'deleted']));
         }
 
-        return redirect()->route('adminUserList');
+        return redirect()->route('admin.user.index');
     }
 }

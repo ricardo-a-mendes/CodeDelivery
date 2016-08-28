@@ -36,22 +36,22 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function (
 
     //Users
     Route::group(['prefix' => 'user'], function () {
-        Route::get('list', 'Admin\UserController@index')->name('adminUserList');
-        Route::post('/', 'Admin\UserController@create')->name('adminUserCreate');
-        Route::get('add', 'Admin\UserController@add')->name('adminUserAdd');
-        Route::get('edit/{id}', 'Admin\UserController@edit')->name('adminUserEdit');
-        Route::put('update/{id}', 'Admin\UserController@update')->name('adminUserUpdate');
-        Route::get('delete/{id}', 'Admin\UserController@delete')->name('adminUserDelete');
+        Route::get('/', 'Admin\UserController@index')->name('admin.user.index');
+        Route::post('/', 'Admin\UserController@store')->name('admin.user.store');
+        Route::get('create', 'Admin\UserController@create')->name('admin.user.create');
+        Route::get('{id}/edit', 'Admin\UserController@edit')->name('admin.user.edit');
+        Route::put('{id}', 'Admin\UserController@update')->name('admin.user.update');
+        Route::get('{id}', 'Admin\UserController@delete')->name('admin.user.delete');
     });
 
     //Category
     Route::group(['prefix' => 'category'], function () {
-        Route::get('list', 'Admin\CategoryController@index')->name('adminCategoryList');
-        Route::post('', 'Admin\CategoryController@create')->name('adminCategoryCreate');
+        Route::get('/', 'Admin\CategoryController@index')->name('admin.category.index');
+        Route::post('/', 'Admin\CategoryController@create')->name('adminCategoryCreate');
         Route::get('add', 'Admin\CategoryController@add')->name('adminCategoryAdd');
-        Route::get('edit/{id}', 'Admin\CategoryController@edit')->name('adminCategoryEdit');
-        Route::put('update/{id}', 'Admin\CategoryController@update')->name('adminCategoryUpdate');
-        Route::get('delete/{id}', 'Admin\CategoryController@delete')->name('adminCategoryDelete');
+        Route::get('{id}/edit', 'Admin\CategoryController@edit')->name('adminCategoryEdit');
+        Route::put('{id}', 'Admin\CategoryController@update')->name('adminCategoryUpdate');
+        Route::get('{id}', 'Admin\CategoryController@delete')->name('adminCategoryDelete');
     });
 
     //Cupom

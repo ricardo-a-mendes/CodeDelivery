@@ -4,7 +4,7 @@
         <div class="row">
             <div class="row page-header">
                 <h1>Users <small>Management Area</small></h1>
-                <a href="{{route('adminUserAdd')}}" class="btn btn-success">New User</a>
+                <a href="{{route('admin.user.create')}}" class="btn btn-success">New User</a>
             </div>
             <table class="table table-striped">
                 <thead>
@@ -16,13 +16,13 @@
                 </thead>
                 @foreach($userCollection as $user)
                     <tr>
-                        <td><a href="{{route('adminUserEdit', ['id' => $user->id])}}">{{$user->id}}</a></td>
+                        <td><a href="{{route('admin.user.edit', ['id' => $user->id])}}">{{$user->id}}</a></td>
                         <td>{{$user->name}}</td>
                         <td>{{$user->email}}</td>
                         <td>{{$roles[$user->role]}}</td>
                         <td>
-                            <a href="{{route('adminUserEdit', ['id' => $user->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;
-                            <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('adminUserDelete', ['id' => $user->id])}}|{{ $user->name }}"></span></a>&nbsp;
+                            <a href="{{route('admin.user.edit', ['id' => $user->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;
+                            <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('admin.user.delete', ['id' => $user->id])}}|{{ $user->name }}"></span></a>&nbsp;
                         </td>
                     </tr>
                 @endforeach

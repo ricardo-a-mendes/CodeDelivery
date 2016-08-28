@@ -8,7 +8,7 @@
             </div>
             @include('form_error')
         </div>
-        {!! Form::open(['route' => ['adminUserCreate'], 'method' => 'POST']) !!}
+        {!! Form::open(['route' => ['admin.user.store'], 'method' => 'POST']) !!}
 
         @include('admin.user.fields')
 

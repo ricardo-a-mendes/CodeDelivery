@@ -91,7 +91,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <a class="btn btn-danger" href="{{route('adminUserDelete', ['id' => ''])}}">Remove</a>
+                    <a class="btn btn-danger" href="{{route('admin.user.delete', ['id' => ''])}}">Remove</a>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
