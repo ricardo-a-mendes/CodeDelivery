@@ -3,9 +3,9 @@
 namespace CodeDelivery\Http\Controllers\Admin;
 
 use CodeDelivery\Http\Controllers\Controller;
-use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Requests\Admin\ClientCreateRequest;
 use CodeDelivery\Http\Requests\Admin\ClientUpdateRequest;
+use CodeDelivery\Models\Client;
 use CodeDelivery\Models\User;
 use CodeDelivery\Repositories\ClientRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -26,25 +26,25 @@ class ClientController extends Controller
         return view('admin.client.index', compact('clientCollection'));
     }
 
-    public function add()
+    public function create()
     {
-        $client = $this->client;
+        $client = new Client();
         $client->user = new User();
         return view('admin.client.create', compact('client'));
     }
 
-    public function create(ClientCreateRequest $request, User $user)
+    public function store(ClientCreateRequest $request, User $user, Client $client)
     {
         $arrRrequest = collect($request->except(['password_confirmation']))
             ->merge(['role' => 'client']);
 
-        $this->client->fill($arrRrequest->all());
+        $client->fill($arrRrequest->all());
         $user->fill($arrRrequest->all())->save();
-        $user->client()->save($this->client);
+        $user->client()->save($client);
 
         Session::flash('success', trans('crud.success.saved'));
 
-        return redirect()->route('adminClientList');
+        return redirect()->route('admin.client.index');
     }
 
     public function edit($id)
@@ -54,7 +54,7 @@ class ClientController extends Controller
             return view('admin.client.update', compact('client'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));
-            return redirect()->route('adminClientList');
+            return redirect()->route('admin.client.index');
         }
     }
 
@@ -80,7 +80,7 @@ class ClientController extends Controller
             Session::flash('error', trans('crud.record_not_found', ['action' => 'updated']));
         }
 
-        return redirect()->route('adminClientList');
+        return redirect()->route('admin.client.index');
     }
 
     public function delete($id)
@@ -102,7 +102,7 @@ class ClientController extends Controller
             Session::flash('error', trans('crud.record_not_found', ['action' => 'deleted']));
         }
 
-        return redirect()->route('adminClientList');
+        return redirect()->route('admin.client.index');
     }
 
 

@@ -26,12 +26,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function (
 
     //Clients
     Route::group(['prefix' => 'client'], function () {
-        Route::get('list', 'Admin\ClientController@index')->name('adminClientList');
-        Route::post('/', 'Admin\ClientController@create')->name('adminClientCreate');
-        Route::get('add', 'Admin\ClientController@add')->name('adminClientAdd');
-        Route::get('edit/{id}', 'Admin\ClientController@edit')->name('adminClientEdit');
-        Route::put('update/{id}', 'Admin\ClientController@update')->name('adminClientUpdate');
-        Route::get('delete/{id}', 'Admin\ClientController@delete')->name('adminClientDelete');
+        Route::get('/', 'Admin\ClientController@index')->name('admin.client.index');
+        Route::post('/', 'Admin\ClientController@store')->name('admin.client.store');
+        Route::get('create', 'Admin\ClientController@create')->name('admin.client.create');
+        Route::get('{id}/edit', 'Admin\ClientController@edit')->name('admin.client.edit');
+        Route::put('{id}', 'Admin\ClientController@update')->name('admin.client.update');
+        Route::get('{id}', 'Admin\ClientController@delete')->name('admin.client.delete');
     });
 
     //Users
@@ -78,13 +78,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function (
 //Customer Group
 Route::group(['prefix' => 'customer', 'middleware' => 'auth.checkrole'], function () {
     Route::group(['prefix' => 'order'], function () {
-        Route::get('list', 'OrderController@index')->name('customerOrderList');
-        Route::get('create/{id?}', 'OrderController@create')->name('customerOrderNew');
-        Route::get('edit/{id}', 'OrderController@edit')->name('customerOrderEdit');
-        Route::get('removeItem/{id}', 'OrderController@removeItem')->name('customerOrderItemRemove');
-        Route::post('item/change', 'OrderController@itemChange')->name('customerOrderItemChange');
-        Route::post('product/search', 'OrderController@search')->name('customerOrderItemSearch');
-        Route::post('addItem', 'OrderController@addItems')->name('customerOrderAddItems');
+        Route::get('list', 'Customer\OrderController@index')->name('customerOrderList');
+        Route::get('create/{id?}', 'Customer\OrderController@create')->name('customerOrderNew');
+        Route::get('edit/{id}', 'Customer\OrderController@edit')->name('customerOrderEdit');
+        Route::get('removeItem/{id}', 'Customer\OrderController@removeItem')->name('customerOrderItemRemove');
+        Route::post('item/change', 'Customer\OrderController@itemChange')->name('customerOrderItemChange');
+        Route::post('product/search', 'Customer\OrderController@search')->name('customerOrderItemSearch');
+        Route::post('addItem', 'Customer\OrderController@addItems')->name('customerOrderAddItems');
     });
 });
 
@@ -143,6 +143,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'oauth'], function () {
         );
     });
 
+    //Deliveryman Routes
     Route::group(['prefix' => 'deliveryman', 'middleware' => 'oauth.checkrole:deliveryman'], function () {
         Route::get('pedidos', function(){
             return [

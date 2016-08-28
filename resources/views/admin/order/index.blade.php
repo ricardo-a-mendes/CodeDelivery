@@ -18,7 +18,7 @@
                 @foreach($orderCollection as $order)
                     <tr>
                         <td><a href="{{route('adminOrderEdit', ['id' => $order->id])}}">{{$order->id}}</a></td>
-                        <td><a href="{{route('adminClientEdit', ['id' => $order->client->id])}}">{{$order->client->user->name}}</a></td>
+                        <td><a href="{{route('admin.client.edit', ['id' => $order->client->id])}}">{{$order->client->user->name}}</a></td>
                         <td>{{$order->deliveryman->name or ''}}</td>
                         <td>{{FormatHelper::moneyBR($order->total)}}</td>
                         <td>{{$orderStatus[$order->status]}}</td>

@@ -53,7 +53,7 @@
                 <div class="nav navbar-nav">
                     @if(Auth::user()->role == 'admin')
                         <a href="{{route('adminUserList')}}" class="btn btn-default navbar-btn">Users</a>
-                        <a href="{{route('adminClientList')}}" class="btn btn-default navbar-btn">Clients</a>
+                        <a href="{{route('admin.client.index')}}" class="btn btn-default navbar-btn">Clients</a>
                         <a href="{{route('adminOrderList')}}" class="btn btn-default navbar-btn">Orders</a>
                         <a href="{{route('adminCategoryList')}}" class="btn btn-default navbar-btn">Categories</a>
                         <a href="{{route('adminCupomList')}}" class="btn btn-default navbar-btn">Cupoms</a>
