@@ -44,10 +44,12 @@
                     <p>Category to be deleted: <strong><span id="itemNameDestination"></span></strong></p>
                     <p>Are you sure ?</p>
                 </div>
+                {!! Form::open(['route' => ['admin.category.delete', 0], 'method' => 'DELETE']) !!}
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <a class="btn btn-danger" href="#">Delete</a>
+                    <button type="submit" class="btn btn-danger">Delete</button>
                 </div>
+                {!! Form::close() !!}
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -57,10 +59,16 @@
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var params = button.data('whatever').split("|"); // Extract info from data-* attributes
                 var modal = $(this);
-                console.log(params);
-                modal.find('.modal-footer a').attr('href', params[0]);
+                var form = modal.find('form');
+                var newAction = params[0];
                 modal.find('.modal-body span#itemNameDestination').text(params[1]);
-            })
+                form.attr('action', newAction);
+            });
+
+            $('button[type="submit"]').on('click', function() {
+                $(this).prop('disabled', true);
+                $(this).parent().parent().submit();
+            });
         });
     </script>
 @endsection

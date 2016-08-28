@@ -3,11 +3,11 @@
 namespace CodeDelivery\Http\Controllers\Admin;
 
 use CodeDelivery\Http\Controllers\Controller;
-use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Requests\Admin\CategoryRequest;
 use CodeDelivery\Models\Category;
 use CodeDelivery\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 use Session;
 
 class CategoryController extends Controller
@@ -62,10 +62,10 @@ class CategoryController extends Controller
         return redirect()->route('admin.category.index');
     }
 
-    public function delete($id)
+    public function delete(Request $request)
     {
         try {
-            $category = $this->category->findOrFail($id);
+            $category = $this->category->findOrFail($request->id);
             if($category->products->count() === 0)
             {
                 $category->delete();

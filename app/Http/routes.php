@@ -51,7 +51,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function (
         Route::get('create', 'Admin\CategoryController@create')->name('admin.category.create');
         Route::get('{id}/edit', 'Admin\CategoryController@edit')->name('admin.category.edit');
         Route::put('{id}', 'Admin\CategoryController@update')->name('admin.category.update');
-        Route::get('{id}', 'Admin\CategoryController@delete')->name('admin.category.delete');
+        Route::delete('{id}', 'Admin\CategoryController@delete')->name('admin.category.delete');
     });
 
     //Cupom
