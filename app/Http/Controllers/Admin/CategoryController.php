@@ -5,6 +5,7 @@ namespace CodeDelivery\Http\Controllers\Admin;
 use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Requests\Admin\CategoryRequest;
+use CodeDelivery\Models\Category;
 use CodeDelivery\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Session;
@@ -25,17 +26,17 @@ class CategoryController extends Controller
         return view('admin.category.index', compact('categoryCollection'));
     }
 
-    public function add()
+    public function create()
     {
-        $category = $this->category;
+        $category = new Category();
         return view('admin.category.create', compact('category'));
     }
 
-    public function create(CategoryRequest $request)
+    public function store(CategoryRequest $request, Category $category)
     {
-        $this->category->fill($request->all())->save();
+        $category->fill($request->all())->save();
         Session::flash('success', trans('crud.success.saved'));
-        return redirect()->route('adminCategoryList');
+        return redirect()->route('admin.category.index');
     }
 
     public function edit($id)
@@ -45,7 +46,7 @@ class CategoryController extends Controller
             return view('admin.category.update', compact('category'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));
-            return redirect()->route('adminCategoryList');
+            return redirect()->route('admin.category.index');
         }
     }
 
@@ -58,19 +59,27 @@ class CategoryController extends Controller
             Session::flash('error', trans('crud.record_not_found', ['action' => 'updated']));
         }
 
-        return redirect()->route('adminCategoryList');
+        return redirect()->route('admin.category.index');
     }
 
     public function delete($id)
     {
         try {
-            $this->category->findOrFail($id)->delete();
+            $category = $this->category->findOrFail($id);
+            if($category->products->count() === 0)
+            {
+                $category->delete();
+                Session::flash('success', trans('crud.success.deleted'));
+            }
+            else
+            {
+                Session::flash('error', trans_choice('crud.category_has_products', $category->products->count(), ['qtdProducts' => $category->products->count()]));
+            }
 
-            Session::flash('success', trans('crud.success.deleted'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'deleted']));
         }
 
-        return redirect()->route('adminCategoryList');
+        return redirect()->route('admin.category.index');
     }
 }

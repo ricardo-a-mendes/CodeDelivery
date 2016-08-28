@@ -5,7 +5,7 @@
             <h1>Category Form <small>Create Record</small></h1>
         </div>
         @include('form_error')
-        {!! Form::open(['route' => ['adminCategoryCreate', $category->id], 'method' => 'POST']) !!}
+        {!! Form::open(['route' => ['admin.category.store', $category->id], 'method' => 'POST']) !!}
 
         @include('admin.category.fields')
 

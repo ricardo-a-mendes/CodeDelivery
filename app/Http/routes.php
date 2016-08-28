@@ -47,11 +47,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function (
     //Category
     Route::group(['prefix' => 'category'], function () {
         Route::get('/', 'Admin\CategoryController@index')->name('admin.category.index');
-        Route::post('/', 'Admin\CategoryController@create')->name('adminCategoryCreate');
-        Route::get('add', 'Admin\CategoryController@add')->name('adminCategoryAdd');
-        Route::get('{id}/edit', 'Admin\CategoryController@edit')->name('adminCategoryEdit');
-        Route::put('{id}', 'Admin\CategoryController@update')->name('adminCategoryUpdate');
-        Route::get('{id}', 'Admin\CategoryController@delete')->name('adminCategoryDelete');
+        Route::post('/', 'Admin\CategoryController@store')->name('admin.category.store');
+        Route::get('create', 'Admin\CategoryController@create')->name('admin.category.create');
+        Route::get('{id}/edit', 'Admin\CategoryController@edit')->name('admin.category.edit');
+        Route::put('{id}', 'Admin\CategoryController@update')->name('admin.category.update');
+        Route::get('{id}', 'Admin\CategoryController@delete')->name('admin.category.delete');
     });
 
     //Cupom

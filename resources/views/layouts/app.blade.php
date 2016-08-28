@@ -52,10 +52,10 @@
                 @if (Auth::user())
                 <div class="nav navbar-nav">
                     @if(Auth::user()->role == 'admin')
-                        <a href="{{route('admin.user.list')}}" class="btn btn-default navbar-btn">Users</a>
+                        <a href="{{route('admin.user.index')}}" class="btn btn-default navbar-btn">Users</a>
                         <a href="{{route('admin.client.index')}}" class="btn btn-default navbar-btn">Clients</a>
                         <a href="{{route('adminOrderList')}}" class="btn btn-default navbar-btn">Orders</a>
-                        <a href="{{route('adminCategoryList')}}" class="btn btn-default navbar-btn">Categories</a>
+                        <a href="{{route('admin.category.index')}}" class="btn btn-default navbar-btn">Categories</a>
                         <a href="{{route('adminCupomList')}}" class="btn btn-default navbar-btn">Cupoms</a>
                     @endif
                     <a href="{{route('customerOrderList')}}" class="btn btn-default navbar-btn">My Orders</a>
