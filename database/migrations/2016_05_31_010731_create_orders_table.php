@@ -25,7 +25,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('cupom_id')->references('id')->on('cupoms');
 
             $table->decimal('total');
-            $table->smallInteger('status')->default(0);
+            $table->smallInteger('status')->default(1);
             $table->timestamps();
         });
     }

@@ -5,7 +5,7 @@
         <div class="row">
             <div class="row page-header">
                 <h1>My Orders <small>Management Area</small></h1>
-                <a href="{{route('customerOrderNew')}}" class="btn btn-success">New Order</a>
+                <a href="{{route('customer.order.create')}}" class="btn btn-success">New Order</a>
             </div>
             <table class="table table-striped">
                 <thead>
@@ -26,7 +26,7 @@
                         <td>{{FormatHelper::moneyBR($order->total)}}</td>
                         <td>
                             @if($order->status == 1)
-                            <a href="{{route('customerOrderEdit', ['id' => $order->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;
+                            <a href="{{route('customer.order.edit', ['id' => $order->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;
                             @endif
                         </td>
                     </tr>

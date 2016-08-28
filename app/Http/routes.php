@@ -77,14 +77,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function (
 
 //Customer Group
 Route::group(['prefix' => 'customer', 'middleware' => 'auth.checkrole'], function () {
+
+    //Orders
     Route::group(['prefix' => 'order'], function () {
-        Route::get('list', 'Customer\OrderController@index')->name('customerOrderList');
-        Route::get('create/{id?}', 'Customer\OrderController@create')->name('customerOrderNew');
-        Route::get('edit/{id}', 'Customer\OrderController@edit')->name('customerOrderEdit');
-        Route::get('removeItem/{id}', 'Customer\OrderController@removeItem')->name('customerOrderItemRemove');
-        Route::post('item/change', 'Customer\OrderController@itemChange')->name('customerOrderItemChange');
-        Route::post('product/search', 'Customer\OrderController@search')->name('customerOrderItemSearch');
-        Route::post('addItem', 'Customer\OrderController@addItems')->name('customerOrderAddItems');
+        Route::get('/', 'Customer\OrderController@index')->name('customer.order.index');
+        Route::get('create/{id?}', 'Customer\OrderController@create')->name('customer.order.create');
+        Route::get('{id}/edit', 'Customer\OrderController@edit')->name('customer.order.edit');
+        Route::post('product/search', 'Customer\OrderController@search')->name('customer.order.item.search');
+        Route::post('items/update', 'Customer\OrderController@updateItems')->name('customer.order.items.update');
+        Route::get('removeItem/{id}', 'Customer\OrderController@removeItem')->name('customer.order.item.remove');
+        Route::post('items/add', 'Customer\OrderController@itemsAdd')->name('customer.order.items.add');
     });
 });
 

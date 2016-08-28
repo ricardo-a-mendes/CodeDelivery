@@ -19,7 +19,7 @@
                 </div>
                 <div class="row">
 
-                    {!! Form::open(['route' => ['customerOrderItemSearch'], 'method' => 'POST']) !!}
+                    {!! Form::open(['route' => ['customer.order.item.search'], 'method' => 'POST']) !!}
                     {!! Form::hidden('order_id', $order->id) !!}
                     <div class="col-md-10">
                         <div class="form-group">
@@ -36,7 +36,7 @@
                 </div>
                 @if(count($foundItems)>0)
                 <div class="row">
-                    {!! Form::open(['route' => ['customerOrderAddItems'], 'method' => 'POST']) !!}
+                    {!! Form::open(['route' => ['customer.order.items.add'], 'method' => 'POST']) !!}
                     {!! Form::hidden('order_id', $order->id) !!}
                     <table class="table table-striped">
                         <thead>
@@ -76,7 +76,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    {!! Form::open(['route' => 'customerOrderItemChange', 'method' => 'POST']) !!}
+                    {!! Form::open(['route' => 'customer.order.items.update', 'method' => 'POST']) !!}
                     {!! Form::hidden('order_id', $order->id) !!}
                     <div class="col-md-12">
                         <table class="table table-striped">
@@ -108,7 +108,7 @@
                                     </td>
                                     <td>{{FormatHelper::moneyBR($item->product->price)}}</td>
                                     <td>{{FormatHelper::moneyBR($item->quantity*$item->product->price)}}</td>
-                                    <td><a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('customerOrderItemRemove', ['id' => $item->id])}}|{{ $item->product->name }}"></span></a>&nbsp;</td>
+                                    <td><a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('customer.order.item.remove', ['id' => $item->id])}}|{{ $item->product->name }}"></span></a>&nbsp;</td>
                                 </tr>
                             @endforeach
                             </tbody>
