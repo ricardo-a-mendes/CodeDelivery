@@ -56,8 +56,24 @@ class UserController extends Controller
 
     public function update(UserUpdateRequest $request, $id)
     {
+        $except = collect(['password_confirmation']);
+        $hasPassword = true;
+        if ($request->has('password') === false)
+        {
+            $except->push('password');
+            $hasPassword = false;
+        }
+
+        //Removing 'password_confirmation' and 'password' when applicable
+        $arrRequest = $request->except($except->all());
+
+        if ($hasPassword === true)
+        {
+            $arrRequest['password'] = bcrypt($request->password);
+        }
+
         try {
-            $this->user->findOrFail($id)->fill($request->all())->save();
+            $this->user->findOrFail($id)->fill($arrRequest)->save();
             Session::flash('success', trans('crud.success.saved'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'updated']));
