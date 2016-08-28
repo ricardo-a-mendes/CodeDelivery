@@ -101,8 +101,22 @@ class OrderController extends Controller
             $products = $productModel->whereIn('id', $request->input('item'))->get();
 
             foreach ($products as $product) {
-                $orderItem = new OrderItem();
-                $orderItem->quantity = 1;
+                //Check if already have a selected product in the order
+                $checkProductExistence = $order->items()->where('product_id',  $product->id);
+
+                //If so, just increment the quantity
+                if ($checkProductExistence->count() > 0)
+                {
+                    $orderItem = $checkProductExistence->get()->first();
+                    $orderItem->quantity++;
+                }
+                //otherwise, create a new Item
+                else
+                {
+                    $orderItem = new OrderItem();
+                    $orderItem->quantity = 1;
+                }
+
                 $orderItem->product()->associate($product);
                 $order->items()->save($orderItem);
             }
