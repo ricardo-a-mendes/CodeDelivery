@@ -87,8 +87,9 @@ class UserController extends Controller
         try {
             $user = $this->user->findOrFail($id);
 
-            if ($user->client->orders->count() === 0)
+            if (is_null($user->client) || $user->client->orders->count() === 0)
             {
+                $user->client()->delete();
                 $user->delete();
                 Session::flash('success', trans('crud.success.deleted'));
             }

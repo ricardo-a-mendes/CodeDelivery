@@ -41,7 +41,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function (
         Route::get('create', 'Admin\UserController@create')->name('admin.user.create');
         Route::get('{id}/edit', 'Admin\UserController@edit')->name('admin.user.edit');
         Route::put('{id}', 'Admin\UserController@update')->name('admin.user.update');
-        Route::get('{id}', 'Admin\UserController@delete')->name('admin.user.delete');
+        Route::delete('{id}', 'Admin\UserController@delete')->name('admin.user.delete');
     });
 
     //Category

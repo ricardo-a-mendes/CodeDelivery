@@ -37,11 +37,21 @@
                     <p>User to be deleted: <strong>{{ $user->name }}</strong></p>
                     <p>Are you sure ?</p>
                 </div>
+                {!! Form::open(['route' => ['admin.user.delete', $user->id], 'method' => 'DELETE']) !!}
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <a class="btn btn-danger" href="{{route('admin.user.delete', ['id' => $user->id])}}">Delete</a>
+                    <button type="submit" class="btn btn-danger">Delete</button>
                 </div>
+                {!! Form::close() !!}
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <script type="text/javascript">
+        $(function() {
+            $('button[type="submit"]').on('click', function() {
+                $(this).prop('disabled', true);
+                $(this).parent().parent().submit();
+            });
+        });
+    </script>
 @endsection
