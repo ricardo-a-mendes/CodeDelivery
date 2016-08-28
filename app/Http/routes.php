@@ -61,7 +61,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function (
         Route::get('create', 'Admin\CupomController@create')->name('admin.cupom.create');
         Route::get('{id}/edit', 'Admin\CupomController@edit')->name('admin.cupom.edit');
         Route::put('{id}', 'Admin\CupomController@update')->name('admin.cupom.update');
-        Route::get('{id}', 'Admin\CupomController@delete')->name('admin.cupom.delete');
+        Route::delete('{id}', 'Admin\CupomController@delete')->name('admin.cupom.delete');
     });
 
     //Orders
