@@ -72,17 +72,4 @@ class OrderController extends Controller
 
         return redirect()->route('admin.order.index');
     }
-
-    public function delete($id)
-    {
-        try {
-            $this->order->findOrFail($id)->delete();
-
-            Session::flash('success', trans('crud.success.deleted'));
-        } catch (ModelNotFoundException $e) {
-            Session::flash('error', trans('crud.record_not_found', ['action' => 'deleted']));
-        }
-
-        return redirect()->route('admin.order.index');
-    }
 }

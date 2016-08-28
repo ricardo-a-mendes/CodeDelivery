@@ -71,7 +71,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function (
         Route::get('create', 'Admin\OrderController@create')->name('admin.order.create');
         Route::get('{id}/edit', 'Admin\OrderController@edit')->name('admin.order.edit');
         Route::put('{id}', 'Admin\OrderController@update')->name('admin.order.update');
-        Route::get('{id}', 'Admin\OrderController@delete')->name('admin.order.delete');
     });
 });
 
