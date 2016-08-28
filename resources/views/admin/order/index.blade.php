@@ -4,7 +4,7 @@
         <div class="row">
             <div class="row page-header">
                 <h1>Orders <small>Management Area</small></h1>
-                <a href="{{route('adminOrderAdd')}}" class="btn btn-success">New Order</a>
+                <a href="{{route('admin.order.create')}}" class="btn btn-success">New Order</a>
             </div>
             <table class="table table-striped">
                 <thead>
@@ -17,13 +17,13 @@
                 </thead>
                 @foreach($orderCollection as $order)
                     <tr>
-                        <td><a href="{{route('adminOrderEdit', ['id' => $order->id])}}">{{$order->id}}</a></td>
+                        <td><a href="{{route('admin.order.edit', ['id' => $order->id])}}">{{$order->id}}</a></td>
                         <td><a href="{{route('admin.client.edit', ['id' => $order->client->id])}}">{{$order->client->user->name}}</a></td>
                         <td>{{$order->deliveryman->name or ''}}</td>
                         <td>{{FormatHelper::moneyBR($order->total)}}</td>
                         <td>{{$orderStatus[$order->status]}}</td>
                         <td>
-                            <a href="{{route('adminOrderEdit', ['id' => $order->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            <a href="{{route('admin.order.edit', ['id' => $order->id])}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                 @endforeach

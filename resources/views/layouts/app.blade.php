@@ -54,7 +54,7 @@
                     @if(Auth::user()->role == 'admin')
                         <a href="{{route('admin.user.index')}}" class="btn btn-default navbar-btn">Users</a>
                         <a href="{{route('admin.client.index')}}" class="btn btn-default navbar-btn">Clients</a>
-                        <a href="{{route('adminOrderList')}}" class="btn btn-default navbar-btn">Orders</a>
+                        <a href="{{route('admin.order.index')}}" class="btn btn-default navbar-btn">Orders</a>
                         <a href="{{route('admin.category.index')}}" class="btn btn-default navbar-btn">Categories</a>
                         <a href="{{route('admin.cupom.index')}}" class="btn btn-default navbar-btn">Cupoms</a>
                     @endif

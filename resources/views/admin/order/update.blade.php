@@ -4,14 +4,14 @@
         <div class="row">
             <div class="row page-header">
                 <h1>Order Form <small>Update Record</small></h1>
-                <a class="btn btn-success" href="{{ route('adminOrderAdd') }}">New Order</a>
+                <!--<a class="btn btn-success" href="{{ route('admin.order.create') }}">New Order</a>-->
             </div>
             @include('form_error')
 
         </div>
 
         <div class="row">
-            {!! Form::open(['route' => ['adminOrderUpdate', $order->id], 'method' => 'PUT']) !!}
+            {!! Form::open(['route' => ['admin.order.update', $order->id], 'method' => 'PUT']) !!}
             <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">Client</div>
@@ -25,7 +25,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="col-md-3">Delivery Man:</div>
-                        <div class="col-md-9">{!! Form::select('user_deleveryman_id', $deliveryMen, isset($order->deliveryman->id) ? $order->deliveryman->id : 0, ['class' => 'form-control']) !!}</div>
+                        <div class="col-md-9">{!! Form::select('user_deliveryman_id', $deliveryMen, isset($order->deliveryman->id) ? $order->deliveryman->id : 0, ['class' => 'form-control']) !!}</div>
                     </div>
                 </div>
                 <div class="panel panel-default">
@@ -40,7 +40,7 @@
             </div>
             {!! Form::close() !!}
             <div class="col-md-8">
-                <h2>Order Items <a href="{{route('adminOrderAdd')}}" class="btn btn-success btn-sm" role="button">Add New Item</a></h2>
+                <h2>Order Items <a href="{{route('admin.order.create')}}" class="btn btn-success btn-sm" role="button">Add New Item</a></h2>
 
                 <table class="table table-striped">
                     <thead>
@@ -66,7 +66,7 @@
                             <td>{{$item->product->name}}</td>
                             <td>{{FormatHelper::moneyBR($item->product->price)}}</td>
                             <td>{{$item->quantity}}</td>
-                            <td>{{FormatHelper::moneyBR($item->price)}}</td>
+                            <td>{{FormatHelper::moneyBR($item->product->price*$item->quantity)}}</td>
                             <td>
                                 <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{ $item->product->name }}"></span></a>&nbsp;
                             </td>

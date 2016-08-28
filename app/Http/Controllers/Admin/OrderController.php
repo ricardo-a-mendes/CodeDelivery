@@ -27,16 +27,16 @@ class OrderController extends Controller
         return view('admin.order.index', compact('orderCollection', 'orderStatus'));
     }
 
-    public function add()
+    public function create()
     {
         return view('order.create');
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $this->order->fill($request->all())->save();
         Session::flash('success', trans('crud.success.saved'));
-        return redirect()->route('adminOrderList');
+        return redirect()->route('admin.order.index');
     }
 
     public function edit($id, UserRepository $user)
@@ -49,7 +49,7 @@ class OrderController extends Controller
             return view('admin.order.update', compact('order', 'orderStatus', 'deliveryMen'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));
-            return redirect()->route('adminOrderList');
+            return redirect()->route('admin.order.index');
         }
     }
 
@@ -63,14 +63,14 @@ class OrderController extends Controller
             {
                $itemsToSave = $request->except('user_deliveryman_id');
             }
-            
+
             $this->order->findOrFail($id)->fill($itemsToSave)->save();
             Session::flash('success', trans('crud.success.saved'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'updated']));
         }
 
-        return redirect()->route('adminOrderList');
+        return redirect()->route('admin.order.index');
     }
 
     public function delete($id)
@@ -83,6 +83,6 @@ class OrderController extends Controller
             Session::flash('error', trans('crud.record_not_found', ['action' => 'deleted']));
         }
 
-        return redirect()->route('adminOrderList');
+        return redirect()->route('admin.order.index');
     }
 }

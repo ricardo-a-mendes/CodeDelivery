@@ -66,12 +66,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function (
 
     //Orders
     Route::group(['prefix' => 'order'], function () {
-        Route::get('list', 'Admin\OrderController@index')->name('adminOrderList');
-        Route::post('/', 'Admin\OrderController@create')->name('adminOrderCreate');
-        Route::get('add', 'Admin\OrderController@add')->name('adminOrderAdd');
-        Route::get('edit/{id}', 'Admin\OrderController@edit')->name('adminOrderEdit');
-        Route::put('update/{id}', 'Admin\OrderController@update')->name('adminOrderUpdate');
-        Route::get('delete/{id}', 'Admin\OrderController@delete')->name('adminOrderDelete');
+        Route::get('/', 'Admin\OrderController@index')->name('admin.order.index');
+        Route::post('/', 'Admin\OrderController@store')->name('admin.order.store');
+        Route::get('create', 'Admin\OrderController@create')->name('admin.order.create');
+        Route::get('{id}/edit', 'Admin\OrderController@edit')->name('admin.order.edit');
+        Route::put('{id}', 'Admin\OrderController@update')->name('admin.order.update');
+        Route::get('{id}', 'Admin\OrderController@delete')->name('admin.order.delete');
     });
 });
 

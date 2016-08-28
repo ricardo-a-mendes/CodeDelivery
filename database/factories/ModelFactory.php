@@ -67,7 +67,7 @@ $factory->define(Order::class, function (Generator $faker) {
 
     return [
         'client_id' => $clientID,
-        'user_deleveryman_id' => $deliveryManID,
+        'user_deliveryman_id' => $deliveryManID,
         'total' => $faker->randomFloat(2, 30, 1000),
         'status' => 1,
     ];
