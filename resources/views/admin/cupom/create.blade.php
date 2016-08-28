@@ -5,7 +5,7 @@
             <h1>Cupom Form <small>Create Record</small></h1>
         </div>
         @include('form_error')
-        {!! Form::open(['route' => ['adminCupomCreate'], 'method' => 'POST']) !!}
+        {!! Form::open(['route' => ['admin.cupom.store'], 'method' => 'POST']) !!}
 
         @include('admin.cupom.fields')
 

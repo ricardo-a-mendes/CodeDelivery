@@ -56,7 +56,7 @@
                         <a href="{{route('admin.client.index')}}" class="btn btn-default navbar-btn">Clients</a>
                         <a href="{{route('adminOrderList')}}" class="btn btn-default navbar-btn">Orders</a>
                         <a href="{{route('admin.category.index')}}" class="btn btn-default navbar-btn">Categories</a>
-                        <a href="{{route('adminCupomList')}}" class="btn btn-default navbar-btn">Cupoms</a>
+                        <a href="{{route('admin.cupom.index')}}" class="btn btn-default navbar-btn">Cupoms</a>
                     @endif
                     <a href="{{route('customerOrderList')}}" class="btn btn-default navbar-btn">My Orders</a>
                 </div>

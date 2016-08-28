@@ -3,11 +3,11 @@
     <div class="container">
         <div class="row page-header">
             <h1>Cupom Form <small>Update Record</small></h1>
-            <a class="btn btn-success" href="{{ route('adminCupomAdd') }}">New Cupom</a>
+            <a class="btn btn-success" href="{{ route('admin.cupom.create') }}">New Cupom</a>
             <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteConfirmationModal">Delete this cupom</a>
         </div>
         @include('form_error')
-        {!! Form::open(['route' => ['adminCupomUpdate', $cupom->id], 'method' => 'PUT']) !!}
+        {!! Form::open(['route' => ['admin.cupom.update', $cupom->id], 'method' => 'PUT']) !!}
 
         @include('admin.cupom.fields')
 
@@ -36,7 +36,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <a class="btn btn-danger" href="{{route('adminCupomDelete', ['id' => $cupom->id])}}">Delete</a>
+                    <a class="btn btn-danger" href="{{route('admin.cupom.delete', ['id' => $cupom->id])}}">Delete</a>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
