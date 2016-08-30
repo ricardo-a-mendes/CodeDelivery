@@ -47,4 +47,14 @@ class ClientRepositoryEloquent extends BaseRepository implements ClientRepositor
     {
         return $this->model->findOrFail($id);
     }
+
+    /**
+     * @param $userID
+     * @return Client
+     */
+    public function getByUserID($userID)
+    {
+        $client = $this->model->where('user_id', '=', $userID)->first();
+        return $client;
+    }
 }

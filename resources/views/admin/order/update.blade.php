@@ -60,7 +60,7 @@
                     </tr>
                     </tfoot>
                     <tbody>
-                    @foreach($order->items as $item)
+                    @foreach($order->orderItems as $item)
                         <tr>
                             <td>{{$item->product->id}}</td>
                             <td>{{$item->product->name}}</td>

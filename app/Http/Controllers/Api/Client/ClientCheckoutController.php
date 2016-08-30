@@ -45,13 +45,13 @@ class ClientCheckoutController extends Controller
                 {
                     $orderItem = new OrderItem();
                     $orderItem->fill($item);
-                    $this->order->items()->save($orderItem);
+                    $this->order->orderItems()->save($orderItem);
                 }
             }
         }
 
         //Just to show the items into Order
-        $this->order->items;
+        $this->order->orderItems;
 
         return $this->order;
     }
@@ -59,13 +59,13 @@ class ClientCheckoutController extends Controller
     public function show($id)
     {
         $clientId = Authorizer::getResourceOwnerId();
-        $order = $this->order->with(['client', 'items'])->where('client_id', '=', $clientId)->find($id);
+        $order = $this->order->with(['client', 'orderItems'])->where('client_id', '=', $clientId)->find($id);
         if (is_null($order))
         {
             return ['Sorry, this Order does not belongs to you!'];
         }
 
-        $order->items->each(function ($item){
+        $order->orderItems->each(function ($item){
             $item->product;
         });
         return $order;

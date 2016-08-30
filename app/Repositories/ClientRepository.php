@@ -2,6 +2,7 @@
 
 namespace CodeDelivery\Repositories;
 
+use CodeDelivery\Models\Client;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
@@ -19,4 +20,10 @@ interface ClientRepository extends RepositoryInterface
      * @throws ModelNotFoundException
      */
     public function findOrFail($id);
+
+    /**
+     * @param $userID
+     * @return Client
+     */
+    public function getByUserID($userID);
 }

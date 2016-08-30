@@ -85,7 +85,7 @@ Route::group(['prefix' => 'customer', 'middleware' => 'auth.checkrole'], functio
         Route::post('product/search', 'Customer\OrderController@search')->name('customer.order.item.search');
         Route::post('items/update', 'Customer\OrderController@updateItems')->name('customer.order.items.update');
         Route::get('removeItem/{id}', 'Customer\OrderController@removeItem')->name('customer.order.item.remove');
-        Route::post('items/add', 'Customer\OrderController@itemsAdd')->name('customer.order.items.add');
+        Route::post('items/add', 'Customer\OrderController@addItems')->name('customer.order.items.add');
     });
 });
 

@@ -6,6 +6,7 @@ use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Models\Order;
 use CodeDelivery\Models\OrderItem;
 use CodeDelivery\Models\Product;
+use CodeDelivery\Repositories\ClientRepository;
 use CodeDelivery\Repositories\OrderItemRepository;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\ProductRepository;
@@ -28,7 +29,7 @@ class OrderController extends Controller
         $id = Session::get('order_id', 0);
         if ($id > 0) {
             $order = $orderRepository->findOrFail($id);
-            $orderItems = $order->items;
+            $orderItems = $order->orderItems;
             Session::reflash();
         } else {
             $order = new Order();
@@ -81,18 +82,20 @@ class OrderController extends Controller
         } else {
             $order = $orderRepository->findOrFail($request->input('order_id'));
         }
-        $orderItems = $order->items;
+        $orderItems = $order->orderItems;
         $foundItems = $product->search($request->input('product'));
 
         return view('customer.order.create', compact('order', 'orderItems', 'foundItems'));
     }
 
-    public function itemsAdd(Request $request, OrderRepository $orderRepository, Product $productModel)
+    public function addItems(Request $request, OrderRepository $orderRepository, Product $productModel, ClientRepository $clientRepository)
     {
         if ($request->has('item')) {
             if ($request->input('order_id') === '0') {
                 $order = new Order();
-                $order->client()->associate(\Auth::user());
+
+                $client = $clientRepository->getByUserID(\Auth::id());
+                $order->client()->associate($client);
                 $order->save();
             } else {
                 $order = $orderRepository->findOrFail($request->input('order_id'));
@@ -102,7 +105,7 @@ class OrderController extends Controller
 
             foreach ($products as $product) {
                 //Check if already have a selected product in the order
-                $checkProductExistence = $order->items()->where('product_id',  $product->id);
+                $checkProductExistence = $order->orderItems()->where('product_id',  $product->id);
 
                 //If so, just increment the quantity
                 if ($checkProductExistence->count() > 0)
@@ -119,7 +122,7 @@ class OrderController extends Controller
                 }
 
                 $orderItem->product()->associate($product);
-                $order->items()->save($orderItem);
+                $order->orderItems()->save($orderItem);
             }
             Event::fire(new OrderItemsWereSavedEvent($order));
         }

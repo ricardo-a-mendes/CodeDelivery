@@ -19,7 +19,7 @@ class OrdersTableSeeder extends Seeder
 
             foreach (range(1,rand(1,7)) as $qtde) {
                 $orderItemModel = factory(OrderItem::class)->make();
-                $createdOrder->items()->save($orderItemModel);
+                $createdOrder->orderItems()->save($orderItemModel);
             }
             
             //Updating Total

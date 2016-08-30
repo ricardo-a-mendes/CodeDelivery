@@ -17,7 +17,7 @@ class Order extends Model implements Transformable
         'status',
     ];
 
-    public function items()
+    public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
     }
