@@ -26,9 +26,8 @@ class UpdateOrderTotal
     public function handle(OrderItemsWereSavedEvent $event)
     {
         $total = $event->order
-            ->selectRaw('sum(order_items.quantity*products.price) as total')
+            ->selectRaw('sum(order_items.quantity*order_items.price) as total')
             ->join('order_items', 'order_items.order_id', '=', 'orders.id')
-            ->join('products', 'products.id', '=', 'order_items.product_id')
             ->where('order_id', '=', $event->order->id)
             ->first()
             ->total;

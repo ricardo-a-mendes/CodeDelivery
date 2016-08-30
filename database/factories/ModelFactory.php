@@ -42,7 +42,7 @@ $factory->define(Product::class, function (Generator $faker) {
     return [
         'name' => $faker->word,
         'description' => $faker->sentence,
-        'price' => $faker->numberBetween(10, 200)
+        'price' => $faker->randomFloat(2, 30, 500)
     ];
 });
 
@@ -74,9 +74,14 @@ $factory->define(Order::class, function (Generator $faker) {
 });
 
 $factory->define(OrderItem::class, function (Generator $faker) {
+
+    $product_id = $faker->numberBetween(1,150);
+    $price = DB::table('products')->where('id', '=', $product_id)->first(['price'])->price;
+
     return [
-        'product_id' => $faker->numberBetween(1,150),
-        'quantity' => $faker->numberBetween(1, 7)
+        'product_id' => $product_id,
+        'quantity' => $faker->numberBetween(1, 7),
+        'price' => $price,
     ];
 });
 

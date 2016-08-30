@@ -24,4 +24,10 @@ interface OrderRepository extends RepositoryInterface
      * @return Options to populate Status Combo for Orders
      */
     public function getOrderStatusOptions();
+
+    /**
+     * @param $userID
+     * @return collection
+     */
+    public function getByUserID($userID);
 }

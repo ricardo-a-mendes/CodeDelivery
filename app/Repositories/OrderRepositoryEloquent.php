@@ -2,6 +2,7 @@
 
 namespace CodeDelivery\Repositories;
 
+use DB;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use CodeDelivery\Repositories\OrderRepository;
@@ -24,7 +25,6 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
         return Order::class;
     }
 
-    
 
     /**
      * Boot up the repository, pushing criteria
@@ -53,5 +53,16 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
     public function getOrderStatusOptions()
     {
         return [0 => 'Canceled', 1 => 'In Progress', 2 => 'Shipping', 3 => 'Finalized'];
+    }
+
+    public function getByUserID($userID)
+    {
+        $orderTable = DB::table('orders');
+        $collection = $orderTable
+            ->join('clients', 'clients.id', '=', 'orders.client_id')
+            ->join('users', 'users.id', '=', 'clients.user_id')
+            ->where('users.id', '=', $userID)->get(['orders.*']);
+
+        return$collection;
     }
 }

@@ -18,7 +18,7 @@ class OrderController extends Controller
 {
     public function index(OrderRepository $orderRepository)
     {
-        $orderCollection = $orderRepository->findWhere(['client_id' => \Auth::user()->id]);
+        $orderCollection = $orderRepository->getByUserID(\Auth::user()->id);
         $statusOptions = $orderRepository->getOrderStatusOptions();
         return view('customer.order.index', compact('orderCollection', 'statusOptions'));
     }
@@ -115,6 +115,7 @@ class OrderController extends Controller
                 {
                     $orderItem = new OrderItem();
                     $orderItem->quantity = 1;
+                    $orderItem->price = $product->price;
                 }
 
                 $orderItem->product()->associate($product);
