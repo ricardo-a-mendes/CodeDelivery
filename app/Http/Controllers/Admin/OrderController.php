@@ -29,7 +29,7 @@ class OrderController extends Controller
 
     public function create()
     {
-        return view('order.create');
+        //TODO: Create order and select client
     }
 
     public function store(Request $request)

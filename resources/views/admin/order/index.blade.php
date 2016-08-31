@@ -4,7 +4,7 @@
         <div class="row">
             <div class="row page-header">
                 <h1>Orders <small>Management Area</small></h1>
-                <a href="{{route('admin.order.create')}}" class="btn btn-success">New Order</a>
+                <!-- <a href="{{route('admin.order.create')}}" class="btn btn-success">New Order</a> -->
             </div>
             <table class="table table-striped">
                 <thead>

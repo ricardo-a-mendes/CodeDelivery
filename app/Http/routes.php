@@ -135,7 +135,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'oauth'], function () {
     Route::group(['prefix' => 'client', 'middleware' => 'oauth.checkrole:client'], function () {
         Route::resource('order',
             'Api\Client\ClientCheckoutController',
-            ['except' => ['create', 'edit', 'destroy']]
+            ['except' => ['create', 'edit', 'update', 'destroy']]
         );
 
         Route::resource('authenticated',

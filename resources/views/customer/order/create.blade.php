@@ -50,7 +50,7 @@
                         <tbody>
                         @foreach($foundItems as $searchedItem)
                             <tr>
-                                <td>{!! Form::checkbox('item[]', $searchedItem->id) !!}</td>
+                                <td>{!! Form::checkbox('items[]', $searchedItem->id) !!}</td>
                                 <td>{{$searchedItem->name}}</td>
                                 <td>{{$searchedItem->category->name}}</td>
                                 <td>{{FormatHelper::moneyBR($searchedItem->price)}}</td>
@@ -63,6 +63,10 @@
                     </div>
                     {!! Form::close() !!}
                 </div>
+                @elseif($isSearch === true)
+                    <div class="row">
+                        <h5>Ohhh Snap! We didn't find anything. =(</h5>
+                    </div>
                 @endif
             </div>
 
@@ -93,7 +97,7 @@
                             <tr>
                                 <td colspan="3" align="right"><strong>Total</strong></td>
                                 <td>{{FormatHelper::moneyBR($order->total)}}</td>
-                                <td>&nbsp;</td>
+                                <td>&nbsp</td>
                             </tr>
                             </tfoot>
                             <tbody>

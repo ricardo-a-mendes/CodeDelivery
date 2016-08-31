@@ -40,7 +40,7 @@
             </div>
             {!! Form::close() !!}
             <div class="col-md-8">
-                <h2>Order Items <a href="{{route('admin.order.create')}}" class="btn btn-success btn-sm" role="button">Add New Item</a></h2>
+                <h2>Order Items <!--<a href="{{route('admin.order.create')}}" class="btn btn-success btn-sm" role="button">Add New Item</a>--></h2>
 
                 <table class="table table-striped">
                     <thead>
@@ -68,7 +68,7 @@
                             <td>{{$item->quantity}}</td>
                             <td>{{FormatHelper::moneyBR($item->product->price*$item->quantity)}}</td>
                             <td>
-                                <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{ $item->product->name }}"></span></a>&nbsp;
+                               <!-- <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{ $item->product->name }}"></span></a> -->&nbsp;
                             </td>
                         </tr>
                     @endforeach

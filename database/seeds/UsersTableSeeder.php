@@ -26,6 +26,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'user@user.com',
             'password' => bcrypt('123456'),
             'remember_token' => '1 a 6',
+            'role' => 'client'
         ]);
 
         $clientModel = factory(Client::class)->make();

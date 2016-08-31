@@ -10,6 +10,7 @@ use CodeDelivery\Repositories\ClientRepository;
 use CodeDelivery\Repositories\OrderItemRepository;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\ProductRepository;
+use CodeDelivery\Services\OrderService;
 use Illuminate\Http\Request;
 use Session;
 use Event;
@@ -38,7 +39,8 @@ class OrderController extends Controller
         }
 
         $foundItems = [];
-        return view('customer.order.create', compact('order', 'orderItems', 'foundItems'));
+        $isSearch = false;
+        return view('customer.order.create', compact('order', 'orderItems', 'foundItems', 'isSearch'));
     }
 
     public function edit($id)
@@ -84,45 +86,21 @@ class OrderController extends Controller
         }
         $orderItems = $order->orderItems;
         $foundItems = $product->search($request->input('product'));
-
-        return view('customer.order.create', compact('order', 'orderItems', 'foundItems'));
+        $isSearch = true;
+        return view('customer.order.create', compact('order', 'orderItems', 'foundItems', 'isSearch'));
     }
 
-    public function addItems(Request $request, OrderRepository $orderRepository, Product $productModel, ClientRepository $clientRepository)
+    public function addItems(Request $request, Product $productModel, ClientRepository $clientRepository, OrderService $orderService)
     {
-        if ($request->has('item')) {
-            if ($request->input('order_id') === '0') {
-                $order = new Order();
+        if ($request->has('items')) {
 
-                $client = $clientRepository->getByUserID(\Auth::id());
-                $order->client()->associate($client);
-                $order->save();
-            } else {
-                $order = $orderRepository->findOrFail($request->input('order_id'));
-            }
+            $client = $clientRepository->getByUserID(\Auth::id());
+            $order = $orderService->getOrNew($request->input('order_id'), $client->id);
 
-            $products = $productModel->whereIn('id', $request->input('item'))->get();
+            $products = $productModel->whereIn('id', $request->input('items'))->get();
 
             foreach ($products as $product) {
-                //Check if already have a selected product in the order
-                $checkProductExistence = $order->orderItems()->where('product_id',  $product->id);
-
-                //If so, just increment the quantity
-                if ($checkProductExistence->count() > 0)
-                {
-                    $orderItem = $checkProductExistence->get()->first();
-                    $orderItem->quantity++;
-                }
-                //otherwise, create a new Item
-                else
-                {
-                    $orderItem = new OrderItem();
-                    $orderItem->quantity = 1;
-                    $orderItem->price = $product->price;
-                }
-
-                $orderItem->product()->associate($product);
-                $order->orderItems()->save($orderItem);
+                $orderService->createOrUpdateItem($order, $product);
             }
             Event::fire(new OrderItemsWereSavedEvent($order));
         }
