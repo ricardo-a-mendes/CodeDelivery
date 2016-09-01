@@ -144,6 +144,9 @@ Route::group(['prefix' => 'api', 'middleware' => 'oauth'], function () {
         );
     });
 
+    //Remover apos treinamento. Rota programada para api/client/authenticated
+    Route::get('authenticated', 'Api\Client\ClientController@index');
+
     //Deliveryman Routes
     Route::group(['prefix' => 'deliveryman', 'middleware' => 'oauth.checkrole:deliveryman'], function () {
         Route::get('pedidos', function(){
