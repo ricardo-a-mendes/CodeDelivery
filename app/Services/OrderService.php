@@ -19,6 +19,12 @@ class OrderService
      */
     private $clientRepository;
 
+    const STATUS_CANCELED = 0;
+    const STATUS_CREATING = 1;
+    const STATUS_PROCESSING = 2;
+    const STATUS_SHIPPING = 3;
+    const STATUS_DELIVERED = 4;
+
     /**
      * OrderService constructor.
      * @param OrderRepository $orderRepository
@@ -48,8 +54,10 @@ class OrderService
 
     /**
      * Create an order item. It checks if the order already has the item.
+     *
      * @param Order $order
      * @param Product $product
+     * @param int $quantity
      */
     public function createOrUpdateItem(Order $order, Product $product, $quantity = 0)
     {
@@ -77,5 +85,38 @@ class OrderService
         }
 
         $order->orderItems()->save($orderItem);
+    }
+
+    /**
+     * Update Order status
+     *
+     * @param $id
+     * @param $status
+     * @return mixed
+     * @throws \Exception
+     */
+    public function updateStatus($id, $status)
+    {
+        $existentStatuses = [
+            self::STATUS_CANCELED,
+            self::STATUS_CREATING,
+            self::STATUS_PROCESSING,
+            self::STATUS_SHIPPING,
+            self::STATUS_DELIVERED,
+        ];
+
+        if (!in_array($status, $existentStatuses))
+            throw new \Exception('Invalid Status.');
+
+        try {
+            $order = $this->orderRepository->findOrFail($id);
+
+            $order->status = $status;
+            $order->save();
+            return $order;
+
+        } catch (ModelNotFoundException $e) {
+            throw new \Exception('Order not found.');
+        }
     }
 }

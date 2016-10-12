@@ -144,20 +144,21 @@ Route::group(['prefix' => 'api', 'middleware' => 'oauth'], function () {
         );
     });
 
-    //Remover apos treinamento. Rota programada para api/client/authenticated
-    Route::get('authenticated', 'Api\Client\ClientController@index');
-
     //Deliveryman Routes
     Route::group(['prefix' => 'deliveryman', 'middleware' => 'oauth.checkrole:deliveryman'], function () {
-        Route::get('pedidos', function(){
-            return [
-                'id' => 1,
-                'client' => 'RicardoDeliveryman',
-                'total' => 10
-            ];
-        });
+        Route::resource('order',
+            'Api\Deliveryman\DeliverymanCheckoutController',
+            ['except' => ['create', 'edit', 'update', 'destroy', 'store']]
+        );
+
+        Route::patch('order/{id}/update-status', [
+            'uses' => 'Api\Deliveryman\DeliverymanCheckoutController@updateStatus',
+            'as' => 'deliveryman.order.status.update'
+        ]);
     });
 
+    //Remover apos treinamento. Rota programada para api/client/authenticated
+    Route::get('authenticated', 'Api\Client\ClientController@index');
 
 });
 

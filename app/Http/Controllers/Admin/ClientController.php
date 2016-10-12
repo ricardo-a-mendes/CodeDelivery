@@ -50,7 +50,8 @@ class ClientController extends Controller
     public function edit($id)
     {
         try {
-            $client = $this->client->findOrFail($id);
+            //$client = $this->client->findOrFail($id);
+            $client = $this->client->find($id);
             return view('admin.client.update', compact('client'));
         } catch (ModelNotFoundException $e) {
             Session::flash('error', trans('crud.record_not_found', ['action' => 'edited']));

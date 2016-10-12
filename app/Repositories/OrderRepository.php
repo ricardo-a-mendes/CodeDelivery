@@ -30,4 +30,12 @@ interface OrderRepository extends RepositoryInterface
      * @return collection
      */
     public function getByUserID($userID);
+
+    /**
+     * @param $orderID
+     * @param $deliverymanID
+     * @return mixed
+     */
+    public function getByOrderIDAndDeliverymanID($orderID, $deliverymanID);
+
 }
