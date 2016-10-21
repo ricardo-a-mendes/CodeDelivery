@@ -40,7 +40,7 @@ class OrderService
      * @param $clientID
      * @return Order
      */
-    public function getOrNew($orderID, $clientID)
+    public function getOrNew($orderID, $clientID = null)
     {
         try {
             return $this->orderRepository->findOrFail($orderID);
@@ -49,6 +49,18 @@ class OrderService
             $order->save();
 
             return $order;
+        }
+    }
+
+    public function store($data)
+    {
+        \DB::beginTransaction();
+        try {
+            //TODO:Implemnt (Refactory)
+            \DB::commit();
+        } catch (\Exception $exception) {
+            \DB::rollBack();
+            throw $exception;
         }
     }
 
