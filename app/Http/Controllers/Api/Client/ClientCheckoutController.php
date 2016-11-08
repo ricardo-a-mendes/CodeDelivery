@@ -41,11 +41,11 @@ class ClientCheckoutController extends Controller
         ProductRepository $productRepository)
     {
         $orderHasValidItems = false;
-        if ($request->has('orderItems')) {
+        if ($request->has('orderItem')) {
             $client = $clientRepository->getByUserID(Authorizer::getResourceOwnerId());
             $order = $orderService->getOrNew(0, $client->id);
 
-            foreach ($request->orderItems as $item) {
+            foreach ($request->orderItem as $item) {
                 $orderHasValidItems = true;
                 $product = $productRepository->find($item['product_id']);
                 $orderService->createOrUpdateItem($order, $product, $item['quantity']);

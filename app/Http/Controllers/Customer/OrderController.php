@@ -2,19 +2,19 @@
 
 namespace CodeDelivery\Http\Controllers\Customer;
 
+use CodeDelivery\Events\OrderItemsWereSavedEvent;
 use CodeDelivery\Http\Controllers\Controller;
+use CodeDelivery\Http\Requests\CheckoutRequest;
 use CodeDelivery\Models\Order;
-use CodeDelivery\Models\OrderItem;
 use CodeDelivery\Models\Product;
 use CodeDelivery\Repositories\ClientRepository;
 use CodeDelivery\Repositories\OrderItemRepository;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\ProductRepository;
 use CodeDelivery\Services\OrderService;
+use Event;
 use Illuminate\Http\Request;
 use Session;
-use Event;
-use CodeDelivery\Events\OrderItemsWereSavedEvent;
 
 class OrderController extends Controller
 {
@@ -49,6 +49,17 @@ class OrderController extends Controller
         return redirect()->route('customer.order.create');
     }
 
+    public function store(CheckoutRequest $request, OrderItemRepository $orderItemRepository)
+    {
+        if ($request->has('update'))
+            $this->updateItems($request, $orderItemRepository);
+
+        if ($request->has('checkout'))
+            $this->checkout($request, $orderItemRepository);
+
+        return redirect()->route('customer.order.create');
+    }
+
     public function updateItems(Request $request, OrderItemRepository $orderItemRepository)
     {
         $orderID = $request->input('order_id');
@@ -72,8 +83,13 @@ class OrderController extends Controller
             Session::flash('info', trans('crud.info.nothing_to_be_saved'));
         }
 
-        Session::flash('order_id', $orderID);
-        return redirect()->route('customer.order.create');
+        //Session::flash('order_id', $orderID);
+        // return redirect()->route('customer.order.create');
+    }
+
+    public function checkout(Request $request, OrderItemRepository $orderItemRepository)
+    {
+        //dd($request->all());
     }
 
     public function search(Request $request, ProductRepository $product, OrderRepository $orderRepository)
@@ -96,6 +112,7 @@ class OrderController extends Controller
 
             $client = $clientRepository->getByUserID(\Auth::id());
             $order = $orderService->getOrNew($request->input('order_id'), $client->id);
+            Session::flash('order_id', $order->id);
 
             $products = $productModel->whereIn('id', $request->input('items'))->get();
 
@@ -104,8 +121,11 @@ class OrderController extends Controller
             }
             Event::fire(new OrderItemsWereSavedEvent($order));
         }
+        else
+        {
+            Session::flash('order_id', 0);
+        }
 
-        Session::flash('order_id', $order->id);
         return redirect()->route('customer.order.create');
     }
 

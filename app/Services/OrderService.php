@@ -56,7 +56,7 @@ class OrderService
     {
         \DB::beginTransaction();
         try {
-            //TODO:Implemnt (Refactory)
+            //TODO:Implemnt (Refactor)
             \DB::commit();
         } catch (\Exception $exception) {
             \DB::rollBack();
