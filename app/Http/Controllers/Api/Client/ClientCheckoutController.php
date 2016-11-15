@@ -35,13 +35,10 @@ class ClientCheckoutController extends Controller
         return $orderCollection;
     }
 
-    public function store(CheckoutRequest $request,
-        OrderService $orderService,
-        ClientRepository $clientRepository,
-        ProductRepository $productRepository)
+    public function store(CheckoutRequest $request, OrderService $orderService, ClientRepository $clientRepository, ProductRepository $productRepository)
     {
         $orderHasValidItems = false;
-        if ($request->has('orderItem')) {
+        if ($request->has('orderItems')) {
             $client = $clientRepository->getByUserID(Authorizer::getResourceOwnerId());
             $order = $orderService->getOrNew(0, $client->id);
 

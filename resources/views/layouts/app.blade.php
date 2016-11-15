@@ -58,7 +58,7 @@
                         <a href="{{route('admin.category.index')}}" class="btn btn-default navbar-btn">Categories</a>
                         <a href="{{route('admin.cupom.index')}}" class="btn btn-default navbar-btn">Cupoms</a>
                     @endif
-                    <a href="{{route('customer.order.index')}}" class="btn btn-default navbar-btn">My Orders</a>
+                    <a href="{{route('client.order.index')}}" class="btn btn-default navbar-btn">My Orders</a>
                 </div>
                 @endif
 

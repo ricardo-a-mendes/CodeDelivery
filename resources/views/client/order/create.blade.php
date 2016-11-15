@@ -23,7 +23,7 @@
                 </div>
                 <div class="row">
 
-                    {!! Form::open(['route' => ['customer.order.item.search'], 'method' => 'POST']) !!}
+                    {!! Form::open(['route' => ['client.order.item.search'], 'method' => 'POST']) !!}
                     {!! Form::hidden('order_id', $order->id) !!}
                     <div class="col-md-10">
                         <div class="form-group">
@@ -40,7 +40,7 @@
                 </div>
                 @if(count($foundItems)>0)
                 <div class="row">
-                    {!! Form::open(['route' => ['customer.order.items.add'], 'method' => 'POST']) !!}
+                    {!! Form::open(['route' => ['client.order.items.add'], 'method' => 'POST']) !!}
                     {!! Form::hidden('order_id', $order->id) !!}
                     <table class="table table-striped">
                         <thead>
@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    {!! Form::open(['route' => 'customer.order.items.store', 'method' => 'POST']) !!}
+                    {!! Form::open(['route' => 'client.order.items.store', 'method' => 'POST']) !!}
                     {!! Form::hidden('order_id', $order->id) !!}
                     <div class="col-md-12">
                         <table class="table table-striped">
@@ -110,19 +110,18 @@
                                     <td>{{$item->product->name}}</td>
                                     <td>
                                         <div class="form-group col-md-5">
-                                        {!! Form::hidden('orderItem['.$i.'][product_id]', $item->id) !!}
-                                        {!! Form::hidden('orderItem['.$i.'][quantity_hidden]', $item->quantity) !!}
-                                        {!! Form::number('orderItem['.$i.'][quantity]', $item->quantity, ['step' => '1', 'min' => 1, 'class' => 'form-control input-sm', 'placeholder' => 'Value']) !!}
+                                        {!! Form::hidden('orderItems['.$i.'][product_id]', $item->id) !!}
+                                        {!! Form::hidden('orderItems['.$i.'][quantity_hidden]', $item->quantity) !!}
+                                        {!! Form::number('orderItems['.$i.'][quantity]', $item->quantity, ['step' => '1', 'min' => 1, 'class' => 'form-control input-sm', 'placeholder' => 'Value']) !!}
                                         </div>
                                     </td>
                                     <td>{{FormatHelper::moneyBR($item->product->price)}}</td>
                                     <td>{{FormatHelper::moneyBR($item->quantity*$item->product->price)}}</td>
-                                    <td><a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('customer.order.item.remove', ['id' => $item->id])}}|{{ $item->product->name }}"></span></a>&nbsp;</td>
+                                    <td><a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteConfirmationModal" data-whatever="{{route('client.order.item.remove', ['id' => $item->id])}}|{{ $item->product->name }}"></span></a>&nbsp;</td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        {!! Form::submit('Checkout2', ['name' => 'checkout', 'class' => 'btn btn-success']) !!}
                         @if(count($orderItems) > 0)
                             {!! Form::submit('Update Order', ['name' => 'update', 'class' => 'btn btn-primary']) !!}
                             {!! Form::submit('Checkout', ['name' => 'checkout', 'class' => 'btn btn-success']) !!}
@@ -146,8 +145,10 @@
                     <p>Are you sure ?</p>
                 </div>
                 <div class="modal-footer">
+                    {!! Form::open(['route' => ['client.order.item.remove', 0], 'id' => 'frmDelete', 'method' => 'DELETE']) !!}
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <a class="btn btn-danger" href="#">Delete</a>
+                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                    {!! Form::close() !!}
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -158,7 +159,7 @@
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var params = button.data('whatever').split("|"); // Extract info from data-* attributes
                 var modal = $(this);
-                modal.find('.modal-footer a').attr('href', params[0]);
+                modal.find('#frmDelete').attr('action', params[0]);
                 modal.find('.modal-body span#itemNameDestination').text(params[1]);
             })
         });

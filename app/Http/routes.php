@@ -16,7 +16,7 @@ use CodeDelivery\Models\User;
 
 Route::get('/home', 'HomeController@index');
 Route::get('/', function () {
-    return redirect('/home');
+    return redirect()->route('client.order.index');
 });
 Route::auth();
 Route::pattern('id', '\d+');
@@ -74,20 +74,24 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole'], function (
     });
 });
 
-//Customer Group
-Route::group(['prefix' => 'customer', 'middleware' => 'auth.checkrole'], function () {
+//Client Group
+Route::group(['prefix' => 'client', 'middleware' => 'auth.checkrole'], function () {
+
+    Route::post('product/search', 'OrderController@search')->name('client.order.item.search');
+    Route::post('items/add', 'OrderController@addItems')->name('client.order.items.add');
+    Route::post('items/update', 'OrderController@updateItems')->name('client.order.items.update');
 
     //Orders
-    Route::group(['prefix' => 'order'], function () {
-        Route::get('/', 'Customer\OrderController@index')->name('customer.order.index');
-        Route::get('create/{id?}', 'Customer\OrderController@create')->name('customer.order.create');
-        Route::get('{id}/edit', 'Customer\OrderController@edit')->name('customer.order.edit');
-        Route::post('product/search', 'Customer\OrderController@search')->name('customer.order.item.search');
-        Route::post('items/update', 'Customer\OrderController@updateItems')->name('customer.order.items.update');
-        Route::get('removeItem/{id}', 'Customer\OrderController@removeItem')->name('customer.order.item.remove');
-        Route::post('items/add', 'Customer\OrderController@addItems')->name('customer.order.items.add');
-        Route::post('store', 'Customer\OrderController@store')->name('customer.order.items.store');
-    });
+    Route::resource('order', 'OrderController', [
+        'names' => [
+            'index' => 'client.order.index',
+            'create' => 'client.order.create',
+            'store' => 'client.order.items.store',
+            'edit' => 'client.order.edit',
+            'destroy' => 'client.order.item.remove',
+        ],
+        'except' => ['show', 'update'],
+    ]);
 });
 
 //API Group
