@@ -3,6 +3,7 @@
 namespace CodeDelivery\Repositories;
 
 use CodeDelivery\Models\User;
+use CodeDelivery\Presenters\UserPresenter;
 use CodeDelivery\Validators\UserValidator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -14,6 +15,8 @@ use Prettus\Repository\Eloquent\BaseRepository;
  */
 class UserRepositoryEloquent extends BaseRepository implements UserRepository
 {
+    protected $skipPresenter = true;
+
     /**
      * Specify Model class name
      *
@@ -23,8 +26,6 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     {
         return User::class;
     }
-
-    
 
     /**
      * Boot up the repository, pushing criteria
@@ -57,5 +58,10 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         return $this->model->where('role', '=', 'deliveryman')
             ->orderBy($orderBy)
             ->lists('name', 'id');
+    }
+
+    public function presenter()
+    {
+        return UserPresenter::class;
     }
 }

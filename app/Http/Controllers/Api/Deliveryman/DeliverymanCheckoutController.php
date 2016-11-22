@@ -29,9 +29,9 @@ class DeliverymanCheckoutController extends Controller
     {
         $deliverymanId = Authorizer::getResourceOwnerId();
 
-        $orderCollection = $this->order->with(['orderItems'])
-            ->where('user_deliveryman_id', '=', $deliverymanId)
-            ->get();
+        $orderCollection = $this->order
+            ->skipPresenter(false)
+            ->findWhere(['user_deliveryman_id' => $deliverymanId]);
 
         return $orderCollection;
     }
@@ -39,7 +39,9 @@ class DeliverymanCheckoutController extends Controller
     public function show($id)
     {
         $deliverymanId = Authorizer::getResourceOwnerId();
-        return $this->order->getByOrderIDAndDeliverymanID($id, $deliverymanId);
+        return $this->order
+            ->skipPresenter(false)
+            ->getByOrderIDAndDeliverymanID($id, $deliverymanId);
     }
 
     public function updateStatus(Request $request, $id)

@@ -20,7 +20,7 @@ class ClientCheckoutController extends Controller
      */
     private $order;
 
-    public function __construct(Order $order)
+    public function __construct(OrderRepository $order)
     {
         $this->order = $order;
     }
@@ -28,7 +28,10 @@ class ClientCheckoutController extends Controller
     public function index(OrderRepository $orderRepository)
     {
         $clientId = Authorizer::getResourceOwnerId();
-        $orderCollection = $orderRepository->with(['orderItems'])->scopeQuery(function ($query) use ($clientId) {
+        $orderCollection = $orderRepository
+            ->skipPresenter(false)
+            //->with(['orderItems'])
+            ->scopeQuery(function ($query) use ($clientId) {
             return $query->where('client_id', '=', $clientId);
         })->paginate(10);
 
@@ -64,14 +67,21 @@ class ClientCheckoutController extends Controller
     public function show($id)
     {
         $clientId = Authorizer::getResourceOwnerId();
-        $order = $this->order->with(['client', 'orderItems'])->where('client_id', '=', $clientId)->find($id);
+        $order = $this->order
+            ->skipPresenter(false)
+            //->with(['client', 'orderItems'])
+            ->findWhere([
+                'client_id' => $clientId,
+                'id' => $id
+            ]);
         if (is_null($order)) {
             return ['Sorry, this Order does not belongs to you!'];
         }
-
+        /*
         $order->orderItems->each(function ($item) {
             $item->product;
         });
+        */
         return $order;
     }
 }

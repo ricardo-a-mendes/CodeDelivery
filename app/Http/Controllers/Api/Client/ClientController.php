@@ -24,7 +24,13 @@ class ClientController extends Controller
             $userId = Authorizer::getResourceOwnerId();
 
             //Client is a User with 'client' role
-            $user = $this->userRepository->with('client')->findOrFail($userId);
+            $user = $this->userRepository
+                ->skipPresenter(false)
+                ->with('client')
+                ->findWhere(['id' => $userId]);
+
+            if (isset($user['data']) && count($user['data']) == 1)
+                $user['data'] = $user['data'][0];
 
             return $user;
         }  catch (ModelNotFoundException $e) {
